@@ -1,0 +1,89 @@
+@import '../../vars';
+
+.AnimeContainer {
+  display: inline-block;
+  padding: 0 1rem 1rem 0;
+  position: relative;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 24%;
+  font-size: 14px;
+}
+
+.AnimeCard {
+  background-color: $main-color;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 0.9em;
+  line-height: 1;
+  overflow: hidden;
+  text-align: center;
+}
+
+.MainTitle {
+  font-size: 15px;
+  text-overflow: ellipsis;
+  line-height: 1.8rem;
+  margin: 0.3rem 0 0;
+  overflow: hidden;
+  font-weight: 500;
+}
+
+.AnimeTags {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid rgba(118, 118, 118, 0.1);
+  line-height: 1.6;
+  display: flex;
+  justify-content: center;
+
+  li.PluralTags::after {
+    white-space: pre;
+    content: ' · ';
+  }
+}
+
+.PosterContainer {
+  border-right: 1px solid rgba(118, 118, 118, 0.1);
+  float: left;
+  width: 136px;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
+  }
+  @media screen and (min-width: 40em) {
+    width: 176px;
+    height: 240px;
+  }
+}
+
+.AnimeInfo {
+  display: flex;
+  flex-flow: column;
+  @media screen and (min-width: 40em) {
+    height: 250px;
+    max-height: 240px;
+  }
+}
+
+.AnimeStudios {
+  margin: 0;
+  padding: 5px 0;
+  list-style: none;
+  font-size: 1.15em;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+
+  li.PluralStudios::after {
+    white-space: pre;
+    content: " × ";
+  }
+}
+

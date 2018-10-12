@@ -1,5 +1,7 @@
+@import '../../vars';
+
 .Navigation {
-  height: 56px;
+  height: $header-height;
   width: 100%;
   z-index: 90;
   display: flex;
@@ -7,7 +9,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: black;
+  background-color: $main-color;
   box-sizing: border-box;
   align-items: center;
   padding-right: 10px;
@@ -26,7 +28,7 @@
     text-decoration: none;
     width: 100%;
     display: block;
-    color: #ccc;
+    color: $text-color;
     box-sizing: border-box;
     font-weight: 600;
     white-space: nowrap;

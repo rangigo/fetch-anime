@@ -8,17 +8,19 @@ const Navigation = () => {
   return (
     <div className={styles.Navigation}>
       <div className={styles.Logo}>
-        <img src={logo} alt="logo" className={styles.LogoImg} />
+        <Link to="/">
+          <img src={logo} alt="logo" className={styles.LogoImg} />
+        </Link>
       </div>
       <ul className={styles.NavigationItems}>
         <li className={styles.NavigationItem}>
-          <Link to="/list/winter">Winter</Link>
+          <Link to="/list/2018/winter">Winter</Link>
         </li>
         <li className={styles.NavigationItem}>
-          <Link to="/list/winter">Summer</Link>
+          <Link to="/list/2018/summer">Summer</Link>
         </li>
         <li className={styles.NavigationItem}>
-          <Link to="/list/winter">Spring</Link>
+          <Link to="/list/2018/spring">Spring</Link>
         </li>
       </ul>
     </div>
