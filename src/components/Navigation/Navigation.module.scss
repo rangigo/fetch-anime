@@ -1,0 +1,60 @@
+.Navigation {
+  height: 56px;
+  width: 100%;
+  z-index: 90;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: black;
+  box-sizing: border-box;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.NavigationItems {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 100%;
+  flex-flow: row;
+  display: flex;
+  align-items: center;
+
+  a {
+    text-decoration: none;
+    width: 100%;
+    display: block;
+    color: #ccc;
+    box-sizing: border-box;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 16px 8px;
+    height: 100%;
+  }
+
+  a:hover {
+    color: white;
+  }
+}
+
+.NavigationItem {
+  margin: 10px 0;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+}
+
+.Logo {
+  margin: 10px 0;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.LogoImg {
+  width: 150px;
+}
