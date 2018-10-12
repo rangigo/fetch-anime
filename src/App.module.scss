@@ -1,8 +1,12 @@
-$background: #171717;
+@import 'vars';
 
 .App {
   text-align: center;
   background-color: $background;
   min-height: 100vh;
   color: white;
+}
+
+.Content {
+  margin-top: $header-height;
 }
