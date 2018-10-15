@@ -22,6 +22,9 @@ const Navigation = () => {
         <li className={styles.NavigationItem}>
           <Link to="/list/2018/spring">Spring</Link>
         </li>
+        <li className={styles.NavigationItem}>
+          <Link to="/list/2018/fall">Fall</Link>
+        </li>
       </ul>
     </div>
   )
