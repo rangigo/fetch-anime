@@ -7,7 +7,7 @@ import styles from './List.module.scss'
 export class List extends Component {
   state = {
     animes: [],
-    size: 10,
+    size: 15,
     loading: false,
     season: null,
     year: null,
@@ -35,6 +35,7 @@ export class List extends Component {
 
   componentDidMount() {
     this.loadAnimes()
+    axios.get('/anime/36474').then(res => console.log(res.data))
   }
 
   componentDidUpdate(prevProps) {
@@ -56,8 +57,28 @@ export class List extends Component {
     try {
       this.setState({ loading: true })
       const res = await axios.get(`/season/${year}/${season}`)
-      console.log(res.data)
-      this.setState({ loading: false, animes: res.data.anime })
+
+      // await Promise.all(
+      //   res.data.anime.map(async anime => {
+      //     const animeRes = await axios.get(`/anime/${anime.mal_id}`)
+      //     this.setState({ animes: this.state.animes.concat(animeRes.data) })
+      //   }),
+      // )
+
+      this.setState({
+        loading: false,
+        animes: res.data.anime
+          .filter(
+            anime =>
+              anime.r18 === false &&
+              anime.type === 'TV' &&
+              anime.continuing === false,
+          )
+          .sort(
+            (a, b) =>
+              a.members < b.members ? 1 : a.members > b.members ? -1 : 0,
+          ),
+      })
     } catch (err) {
       console.log(err)
     }
@@ -65,8 +86,7 @@ export class List extends Component {
 
   render() {
     const { animes, size, loading } = this.state
-
-    console.log(animes[0])
+    console.log(animes)
 
     const renderAnimes = loading ? (
       <p>Loading...</p>
