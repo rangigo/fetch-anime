@@ -1,5 +1,14 @@
 @import '../../vars';
 
+@mixin borderBottom() {
+  border-bottom: 1px solid #fffdfd49;
+}
+
+@mixin animeInfoMixIn() {
+  @include borderBottom();
+  padding: 5px 0;
+}
+
 .AnimeContainer {
   display: inline-block;
   padding: 0 1rem 1rem 0;
@@ -21,7 +30,7 @@
 }
 
 .MainTitle {
-  font-size: 15px;
+  font-size: 18px;
   text-overflow: ellipsis;
   line-height: 1.8rem;
   margin: 0.3rem 0 0;
@@ -30,10 +39,10 @@
 }
 
 .AnimeTags {
+  @include borderBottom();
   margin: 0;
   padding: 0;
   list-style: none;
-  border-bottom: 1px solid rgba(118, 118, 118, 0.1);
   line-height: 1.6;
   display: flex;
   justify-content: center;
@@ -41,6 +50,7 @@
   li.PluralTags::after {
     white-space: pre;
     content: ' · ';
+    padding-left: 2px;
   }
 }
 
@@ -63,6 +73,18 @@
   }
 }
 
+.EpCountdown {
+  transition: opacity .15s linear;
+  left: 0;
+  position: absolute;
+  font-size: .95em;
+  color: #fff;
+  z-index: 5;background: rgba(0,0,0,.65);
+  top: 0;
+  padding: .5em 0;
+  width: 100%;
+}
+
 .AnimeInfo {
   display: flex;
   flex-flow: column;
@@ -73,8 +95,9 @@
 }
 
 .AnimeStudios {
+  @include animeInfoMixIn();
+
   margin: 0;
-  padding: 5px 0;
   list-style: none;
   font-size: 1.15em;
   white-space: nowrap;
@@ -83,7 +106,36 @@
 
   li.PluralStudios::after {
     white-space: pre;
-    content: " × ";
+    content: ' × ';
+    padding-left: 2px;
   }
 }
 
+.AnimeDate {
+  @include animeInfoMixIn();
+}
+
+.AnimeMetaData {
+  @include animeInfoMixIn();
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.AnimeSynopsis {
+  line-height: 1.3;
+  overflow-y: scroll;
+  padding: 0.5em;
+  text-align: left;
+  white-space: normal;
+  flex: 1;
+
+  p {
+    margin: 0;
+    margin-bottom: 1rem;
+    font-size: inherit;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+}
