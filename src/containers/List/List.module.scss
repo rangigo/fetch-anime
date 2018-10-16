@@ -1,5 +1,49 @@
-.Container { 
+@import '../../vars';
+
+.Container {
   padding: 20px 0;
   text-align: left;
   margin-left: 20px;
+  box-sizing: border-box;
+}
+
+.ListTitle {
+  text-align: left;
+  margin-bottom: 10px;
+  padding: 20px 0 0 20px;
+  border-bottom: 1px solid #3e3e40;
+  white-space: nowrap;
+
+  h1 {
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 30px;
+    margin: 0;
+    display: inline-block;
+    margin-right: 20px;
+  }
+
+  nav {
+    display: inline-block;
+    height: 100%;
+  }
+
+  .Type {
+    background: none;
+    border: none;
+    outline: none;
+    color: inherit;
+    padding: 0;
+    margin: 0 20px;
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 2.6;
+    cursor: pointer;
+  }
+  
+  .TypeActive {
+    font-weight: 600;
+
+    border-bottom: 1px solid white;
+  }
 }

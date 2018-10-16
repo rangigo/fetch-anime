@@ -16,15 +16,18 @@ const Anime = ({
   const titleFontSize =
     title.length > 45 ? '12px' : title.length > 37 ? '15px' : '18px'
 
-  const renderTags = genres.map((genre, i) => {
-    if (i !== genres.length - 1)
-      return (
-        <li key={genre.mal_id} className={styles.PluralTags}>
-          {genre.name}
-        </li>
-      )
-    else return <li key={genre.mal_id}>{genre.name}</li>
-  })
+  const renderTags =
+    genres.length > 0
+      ? genres.map((genre, i) => {
+          if (i !== genres.length - 1)
+            return (
+              <li key={genre.mal_id} className={styles.PluralTags}>
+                {genre.name}
+              </li>
+            )
+          else return <li key={genre.mal_id}>{genre.name}</li>
+        })
+      : '?'
 
   const tagFontSize =
     genres.length >= 7 ? '10px' : genres.length >= 6 ? '10.8px' : '12.5px'

@@ -7,35 +7,15 @@ import styles from './List.module.scss'
 export class List extends Component {
   state = {
     animes: [],
-    size: 15,
+    size: 14,
     loading: false,
-    season: null,
-    year: null,
+    activeType: 'TV',
   }
-
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   const {
-  //     match: {
-  //       params: { season, year },
-  //     },
-  //   } = nextProps
-
-  //   if (season !== prevState.season) {
-  //     return {
-  //       season,
-  //     }
-  //   } else if (year !== prevState.year) {
-  //     return {
-  //       year,
-  //     }
-  //   }
-
-  //   return null
-  // }
 
   componentDidMount() {
     this.loadAnimes()
-    axios.get('/anime/36474').then(res => console.log(res.data))
+    // axios.get('/anime/37349').then(res => console.log(res.data))
+    axios.get('/anime/36999').then(res => console.log(res.data))
   }
 
   componentDidUpdate(prevProps) {
@@ -58,22 +38,10 @@ export class List extends Component {
       this.setState({ loading: true })
       const res = await axios.get(`/season/${year}/${season}`)
 
-      // await Promise.all(
-      //   res.data.anime.map(async anime => {
-      //     const animeRes = await axios.get(`/anime/${anime.mal_id}`)
-      //     this.setState({ animes: this.state.animes.concat(animeRes.data) })
-      //   }),
-      // )
-
       this.setState({
         loading: false,
         animes: res.data.anime
-          .filter(
-            anime =>
-              anime.r18 === false &&
-              anime.type === 'TV' &&
-              anime.continuing === false,
-          )
+          .filter(anime => anime.r18 === false)
           .sort(
             (a, b) =>
               a.members < b.members ? 1 : a.members > b.members ? -1 : 0,
@@ -84,19 +52,85 @@ export class List extends Component {
     }
   }
 
+  onClickType = e => {
+    this.setState({ activeType: e.target.value })
+  }
+
   render() {
-    const { animes, size, loading } = this.state
+    const { animes, size, loading, activeType } = this.state
+    const {
+      match: {
+        params: { season, year },
+      },
+    } = this.props
+
     console.log(animes)
 
     const renderAnimes = loading ? (
       <p>Loading...</p>
     ) : (
       animes
+        .filter(anime => {
+          if (activeType !== 'All')
+            return anime.type === activeType && anime.continuing === false
+          else return anime.continuing === false
+        })
         .slice(0, size)
         .map(anime => <Anime key={anime.mal_id} {...anime} />)
     )
 
-    return <div className={styles.Container}>{renderAnimes}</div>
+    const activeTypeClassname = [styles.Type, styles.TypeActive].join(' ')
+
+    return (
+      <>
+        <div className={styles.ListTitle}>
+          <h1>
+            {season} {year}-{+year + 1} Anime
+          </h1>
+          <nav>
+            <button
+              className={
+                activeType === 'TV' ? activeTypeClassname : styles.Type
+              }
+              onClick={this.onClickType}
+              value="TV"
+            >
+              Television
+            </button>
+            <button
+              className={
+                activeType === 'Movie' ? activeTypeClassname : styles.Type
+              }
+              onClick={this.onClickType}
+              value="Movie"
+            >
+              Movies
+            </button>
+            <button
+              className={
+                activeType === 'OVA' ? activeTypeClassname : styles.Type
+              }
+              onClick={this.onClickType}
+              value="OVA"
+            >
+              OVA
+            </button>
+            <button
+              className={
+                activeType === 'All' ? activeTypeClassname : styles.Type
+              }
+              onClick={this.onClickType}
+              value="All"
+            >
+              All
+            </button>
+          </nav>
+        </div>
+        <div className={styles.Container}>
+          {renderAnimes.length === 0 ? 'No animes found.' : renderAnimes}
+        </div>
+      </>
+    )
   }
 }
 
