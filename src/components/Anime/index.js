@@ -45,9 +45,7 @@ const Anime = ({
 
   const studioFontSize = producers.length >= 3 ? '10.8px' : '14px'
 
-  const splitSynopsis = synopsis.split(
-    /(\(Source: [a-zA-Z0-9\s]+\))|(\[Written by [a-zA-Z0-9\s]+\])/g,
-  )
+  const splitSynopsis = synopsis.split(/(\(Source: .+\))|(\[Written by .+\])/g)
 
   return (
     <article className={styles.AnimeContainer}>
@@ -62,7 +60,9 @@ const Anime = ({
           {renderTags}
         </ol>
         <div className={styles.PosterContainer}>
-          <div className={styles.EpCountdown}>New EP: {moment(airing_start).format('dddd hh:mm A')}</div>
+          <div className={styles.Broadcast}>
+            Broadcast: {moment(airing_start).format('dddd hh:mm A')}
+          </div>
           <img src={image_url} alt={title} />
         </div>
         <div className={styles.AnimeInfo}>
@@ -75,7 +75,7 @@ const Anime = ({
           <div className={styles.AnimeDate}>
             {moment(airing_start)
               .tz('Europe/Helsinki')
-              .format('MMMM Do YYYY, h:mm A z')}
+              .format('MMM Do YYYY, h:mm A z')}
           </div>
           <div className={styles.AnimeMetaData}>
             <div className={styles.AnimeSource}>{source}</div>
@@ -85,7 +85,7 @@ const Anime = ({
           </div>
           <div className={styles.AnimeSynopsis}>
             <p>{splitSynopsis[0]}</p>
-            <p>{splitSynopsis[1]}</p>
+            <p>{splitSynopsis[1] || splitSynopsis[2]}</p>
           </div>
         </div>
         <div className="RelateLinks" />
