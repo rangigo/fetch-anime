@@ -11,12 +11,29 @@
 
 .AnimeContainer {
   display: inline-block;
-  padding: 0 1rem 1rem 0;
+  padding: 0 0.8rem 0.8rem 0;
+  box-sizing: border-box;
   position: relative;
   vertical-align: top;
   white-space: nowrap;
-  width: 24%;
+  width: 25%;
   font-size: 14px;
+  @media screen and (max-width: 92em) {
+    width: 33.333333333%;
+  }
+
+  @media screen and (max-width: 74.9375em) {
+    width: 50%;
+  }
+
+  @media screen and (max-width: 63.9375em) {
+    white-space: normal;
+  }
+
+  @media screen and (max-width: 39.9375em) {
+    width: 100%;
+    display: block;
+  }
 }
 
 .AnimeCard {
@@ -67,27 +84,41 @@
     max-width: 100%;
     height: auto;
   }
+
+  .Broadcast {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.2s linear;
+    left: 0;
+    position: absolute;
+    font-size: 0.83em;
+    color: #fff;
+    z-index: 5;
+    background: rgba(0, 0, 0, 0.65);
+    top: 0;
+    padding: 0.5em 0;
+    width: 100%;
+  }
+
   @media screen and (min-width: 40em) {
     width: 176px;
     height: 240px;
   }
 }
 
-.EpCountdown {
-  transition: opacity .15s linear;
-  left: 0;
-  position: absolute;
-  font-size: .95em;
-  color: #fff;
-  z-index: 5;background: rgba(0,0,0,.65);
-  top: 0;
-  padding: .5em 0;
-  width: 100%;
+.PosterContainer:hover {
+  .Broadcast {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.1s, opacity 0.5s linear;
+  }
 }
 
 .AnimeInfo {
   display: flex;
   flex-flow: column;
+  height: 194.28571429px;
+  max-height: 194.28571429px;
   @media screen and (min-width: 40em) {
     height: 250px;
     max-height: 240px;
