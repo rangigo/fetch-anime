@@ -1,7 +1,7 @@
-import React from 'react'
-import moment from 'moment-timezone'
+import React from 'react';
+import moment from 'moment-timezone';
 
-import styles from './Anime.module.scss'
+import styles from './Anime.module.scss';
 
 const Anime = ({
   title,
@@ -12,9 +12,10 @@ const Anime = ({
   source,
   episodes,
   synopsis,
+  url
 }) => {
   const titleFontSize =
-    title.length > 45 ? '12px' : title.length > 37 ? '15px' : '18px'
+    title.length > 45 ? '12px' : title.length > 37 ? '15px' : '18px';
 
   const renderTags =
     genres.length > 0
@@ -24,14 +25,14 @@ const Anime = ({
               <li key={genre.mal_id} className={styles.PluralTags}>
                 {genre.name}
               </li>
-            )
-          else return <li key={genre.mal_id}>{genre.name}</li>
+            );
+          else return <li key={genre.mal_id}>{genre.name}</li>;
         })
-      : '?'
+      : '?';
 
   const tagFontSize =
-    genres.length >= 7 ? '10px' : genres.length >= 6 ? '10.8px' : '12.5px'
-  const tagLineHeight = genres.length >= 6 ? '1.95' : '1.6'
+    genres.length >= 7 ? '10px' : genres.length >= 6 ? '10.8px' : '12.5px';
+  const tagLineHeight = genres.length >= 6 ? '1.95' : '1.6';
 
   const renderStudios =
     producers.length > 0
@@ -41,21 +42,28 @@ const Anime = ({
               <li key={producer.mal_id} className={styles.PluralStudios}>
                 {producer.name}
               </li>
-            )
-          } else return <li key={producer.mal_id}>{producer.name}</li>
+            );
+          } else return <li key={producer.mal_id}>{producer.name}</li>;
         })
-      : '?'
+      : '?';
 
-  const studioFontSize = producers.length >= 3 ? '10px' : '12.4px'
+  const studioFontSize = producers.length >= 3 ? '10px' : '12.4px';
 
-  const splitSynopsis = synopsis.split(/(\(Source: .+\))|(\[Written by .+\])/g)
+  const splitSynopsis = synopsis.split(/(\(Source: .+\))|(\[Written by .+\])/g);
 
   return (
     <article className={styles.AnimeContainer}>
       <div className={styles.AnimeCard}>
-        <h3 className={styles.MainTitle} style={{ fontSize: titleFontSize }}>
+        <a
+          className={styles.MainTitle}
+          style={{ fontSize: titleFontSize }}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {title}
-        </h3>
+        </a>
+
         <ol
           className={styles.AnimeTags}
           style={{ fontSize: tagFontSize, lineHeight: tagLineHeight }}
@@ -94,7 +102,7 @@ const Anime = ({
         <div className="RelateLinks" />
       </div>
     </article>
-  )
-}
+  );
+};
 
-export default Anime
+export default Anime;

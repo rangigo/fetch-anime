@@ -53,6 +53,13 @@
   margin: 0.3rem 0 0;
   overflow: hidden;
   font-weight: 500;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .AnimeTags {
@@ -100,17 +107,17 @@
     width: 100%;
   }
 
+  &:hover {
+    .Broadcast {
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0.1s, opacity 0.5s linear;
+    }
+  }
+
   @media screen and (min-width: 40em) {
     width: 176px;
     height: 240px;
-  }
-}
-
-.PosterContainer:hover {
-  .Broadcast {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0.1s, opacity 0.5s linear;
   }
 }
 
