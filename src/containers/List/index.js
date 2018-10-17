@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactPaginate from 'react-paginate'
 import axios from '../../hoc/axios'
 
 import Anime from '../../components/Anime'
@@ -7,16 +8,19 @@ import styles from './List.module.scss'
 
 export class List extends Component {
   state = {
+    data: [],
     animes: [],
-    size: 14,
     loading: false,
     activeType: 'TV',
+    pages: 10,
+    currentPage: 0,
+    animesPerPage: 16
   }
 
   componentDidMount() {
     this.loadAnimes()
     // axios.get('/anime/37349').then(res => console.log(res.data))
-    axios.get('/anime/36999').then(res => console.log(res.data))
+    // axios.get('/anime/36999').then(res => console.log(res.data))
   }
 
   componentDidUpdate(prevProps) {
@@ -31,22 +35,35 @@ export class List extends Component {
   loadAnimes = async () => {
     const {
       match: {
-        params: { season, year },
-      },
+        params: { season, year }
+      }
     } = this.props
 
     try {
       this.setState({ loading: true })
       const res = await axios.get(`/season/${year}/${season}`)
 
-      this.setState({
-        loading: false,
-        animes: res.data.anime
+      // Set initial data
+      await this.setState({
+        data: res.data.anime
           .filter(anime => anime.r18 === false)
           .sort(
             (a, b) =>
-              a.members < b.members ? 1 : a.members > b.members ? -1 : 0,
-          ),
+              a.members < b.members ? 1 : a.members > b.members ? -1 : 0
+          )
+      })
+
+      //Set animes by Type
+      await this.setState({
+        animes: this.state.data.filter(
+          anime => anime.type === this.state.activeType
+        )
+      })
+
+      //Set Pages value and Loading to false
+      await this.setState({
+        loading: false,
+        pages: Math.floor(this.state.animes.length / this.state.animesPerPage)
       })
     } catch (err) {
       console.log(err)
@@ -54,32 +71,50 @@ export class List extends Component {
   }
 
   onClickType = e => {
-    this.setState({ activeType: e.target.value })
+    const { value } = e.target
+    const animesByType = this.state.data.filter(anime => {
+      if (value !== 'All') return anime.type === value
+      else return true
+    })
+    this.setState({
+      activeType: value,
+      animes: animesByType,
+      pages: Math.floor(animesByType.length / this.state.animesPerPage),
+      currentPage: 0,
+    })
+  }
+
+  handlePageClick = data => {
+    this.setState({ currentPage: data.selected })
+    console.log(data.selected)
   }
 
   render() {
-    const { animes, size, loading, activeType } = this.state
+    const {
+      animes,
+      loading,
+      activeType,
+      pages,
+      animesPerPage,
+      currentPage
+    } = this.state
     const {
       match: {
-        params: { season, year },
-      },
+        params: { season, year }
+      }
     } = this.props
 
     console.log(animes)
 
-    const renderAnimes = loading ? (
-      Array.from('dummyobj')
-        .map((_, i) => <Loader key={i} /> )
-    ) : (
-      animes
-        .filter(anime => {
-          if (activeType !== 'All')
-            return anime.type === activeType && anime.continuing === false
-          else return anime.continuing === false
-        })
-        .slice(0, size)
-        .map(anime => <Anime key={anime.mal_id} {...anime} />)
-    )
+    const renderAnimes = loading
+      ? Array.from('dummyobj').map((_, i) => <Loader key={i} />)
+      : animes
+          .filter(anime => {
+            if (activeType !== 'All') return anime.type === activeType
+            else return true
+          })
+          .slice(currentPage * animesPerPage, (currentPage + 1) * animesPerPage)
+          .map(anime => <Anime key={anime.mal_id} {...anime} />)
 
     const activeTypeClassname = [styles.Type, styles.TypeActive].join(' ')
 
@@ -128,9 +163,25 @@ export class List extends Component {
             </button>
           </nav>
         </div>
-        <div className={styles.Container}>
+        <div className={styles.ListContainer}>
           {renderAnimes.length === 0 ? 'No animes found.' : renderAnimes}
         </div>
+        {loading ? null : (
+          <div className={styles.ListFooter}>
+            <ReactPaginate
+              previousLabel={<i className="fas fa-arrow-left" />}
+              nextLabel={<i className="fas fa-arrow-right" />}
+              breakClassName={styles.BreakLabel}
+              pageCount={pages}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              forcePage={currentPage}
+              onPageChange={this.handlePageClick}
+              containerClassName={styles.Pagination}
+              activeClassName={styles.PageActive}
+            />
+          </div>
+        )}
       </>
     )
   }

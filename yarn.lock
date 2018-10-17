@@ -6968,6 +6968,11 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
+perfect-scrollbar@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/perfect-scrollbar/-/perfect-scrollbar-1.4.0.tgz#5d014ef9775e1f43058a1dbae9ed1daf0e7091f1"
+  integrity sha512-/2Sk/khljhdrsamjJYS5NjrH+GKEHEwh7zFSiYyxROyYKagkE4kSn2zDQDRTOMo8mpT2jikxx6yI1dG7lNP/hw==
+
 performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
@@ -7961,6 +7966,21 @@ react-error-overlay@^5.0.4:
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.0.4.tgz#39cf184d770f98b65a2ee59a779d03b8d092b69e"
   integrity sha512-grVJtoDzIbSMYgy5rKbSOmt2FvzR4iJnpMBjXmZolSYJM5acQvBHoEbBBNW0FzTE/TLZMZ+gSy0bAHydc1hFEw==
+
+react-paginate@^5.2.4:
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/react-paginate/-/react-paginate-5.2.4.tgz#0a4d6d468ebb1795d0581bd4fc930ad57a86ae14"
+  integrity sha512-va0UxtGtJJih227VhYlo5TYgxXKM6pGmhgDnk8bNCf+R/gjyglk732vEIa8EAC8WLri80WJAvWzBqYYt2tBFug==
+  dependencies:
+    prop-types "^15.6.1"
+
+react-perfect-scrollbar@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-perfect-scrollbar/-/react-perfect-scrollbar-1.4.0.tgz#36ffb679c127536afae5eaaaaf4aa7164268466c"
+  integrity sha512-A7RsCbyHw/6zhIqqBUdXNJA2RBByeFDRIx8x0vESKX9AaQq/0u56nBx5Oi4LmZ08AXziBDB+Rpm2Lq1r/iMbwg==
+  dependencies:
+    perfect-scrollbar "^1.4.0"
+    prop-types "^15.6.1"
 
 react-router-dom@^4.3.1:
   version "4.3.1"

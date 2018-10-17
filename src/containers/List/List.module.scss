@@ -1,6 +1,7 @@
 @import '../../vars';
+@import '../../mixins/fade';
 
-.Container {
+.ListContainer {
   padding: 20px 0;
   text-align: left;
   margin-left: 20px;
@@ -40,9 +41,63 @@
     line-height: 2.6;
     cursor: pointer;
   }
-  
-  .Type:hover, .TypeActive {
+
+  .Type:hover,
+  .TypeActive {
     font-weight: 600;
     border-bottom: 1px solid white;
+  }
+}
+
+.ListFooter {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.Pagination {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: inline-flex;
+  justify-content: center;
+  border-radius: .25rem;
+  border: .9px solid $main-color;
+
+  .PageActive {
+    a {
+      color: #445565 !important;
+      background-color: #e3e7eb !important;
+      border-color: #ced4da !important;
+    }
+  }
+
+  li {
+    a {
+      display: inline-block;
+      padding: 0.55rem 1rem;
+      min-width: 1rem;
+      text-align: center;
+      background-color: $main-color;
+      box-shadow: none !important;
+      border-color: #ced4da !important;
+      font-weight: 900;
+      font-size: 1rem;
+      cursor: pointer;
+      @include fade();
+
+      &:hover {
+        color: #445565 !important;
+        background-color: #e3e7eb !important;
+        border-color: #ced4da !important;
+      }
+    }
+  }
+
+  .BreakLabel {
+    display: inline-block;
+    padding: 0.55rem 1rem;
+    min-width: 1rem;
+    background-color: $main-color;
+    cursor: default;
   }
 }

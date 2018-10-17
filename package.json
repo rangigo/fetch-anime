@@ -9,6 +9,8 @@
     "node-sass": "^4.9.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-paginate": "^5.2.4",
+    "react-perfect-scrollbar": "^1.4.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.4",
     "react-skeleton-loader": "^1.0.3"
