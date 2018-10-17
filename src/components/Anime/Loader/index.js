@@ -15,13 +15,13 @@ const Loader = () => {
           <CustomSkeleton width="300px" color="#7c7c85" />
         </h3>
         <ol className={styles.AnimeTags} style={{ border: 'none' }}>
-          <CustomSkeleton width="200px" />
+          <CustomSkeleton width="200px" height="65%" />
         </ol>
         <div
           className={styles.PosterContainer}
           style={{ padding: '5px', border: 'none' }}
         >
-          <CustomSkeleton width="100%" />
+          <CustomSkeleton />
         </div>
         <div className={styles.AnimeInfo}>
           <ul className={styles.AnimeStudios} style={{ border: 'none' }}>
@@ -35,7 +35,7 @@ const Loader = () => {
           </div>
           <div
             className={styles.AnimeSynopsis}
-            style={{ overflowY: 'hidden', textAlign: 'center' }}
+            style={{ overflow: 'hidden', textAlign: 'center' }}
           >
             <CustomSkeleton />
           </div>

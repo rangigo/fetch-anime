@@ -1,6 +1,6 @@
 @import '../../vars';
-@import './rectangle-in';
-@import './fade';
+@import '../../mixins/rectangle-in';
+@import '../../mixins/fade';
 
 .Navigation {
   height: $header-height;
