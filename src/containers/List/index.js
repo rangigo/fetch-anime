@@ -14,7 +14,7 @@ export class List extends Component {
     activeType: 'TV',
     pages: 10,
     currentPage: 0,
-    animesPerPage: 16
+    animesPerPage: 16,
   }
 
   componentDidMount() {
@@ -35,8 +35,8 @@ export class List extends Component {
   loadAnimes = async () => {
     const {
       match: {
-        params: { season, year }
-      }
+        params: { season, year },
+      },
     } = this.props
 
     try {
@@ -50,20 +50,20 @@ export class List extends Component {
           .sort(
             (a, b) =>
               a.members < b.members ? 1 : a.members > b.members ? -1 : 0
-          )
+          ),
       })
 
       //Set animes by Type
       await this.setState({
         animes: this.state.data.filter(
           anime => anime.type === this.state.activeType
-        )
+        ),
       })
 
       //Set Pages value and Loading to false
       await this.setState({
         loading: false,
-        pages: Math.floor(this.state.animes.length / this.state.animesPerPage)
+        pages: this.state.animes.length / this.state.animesPerPage,
       })
     } catch (err) {
       console.log(err)
@@ -79,7 +79,7 @@ export class List extends Component {
     this.setState({
       activeType: value,
       animes: animesByType,
-      pages: Math.floor(animesByType.length / this.state.animesPerPage),
+      pages: animesByType.length / this.state.animesPerPage,
       currentPage: 0,
     })
   }
@@ -87,6 +87,7 @@ export class List extends Component {
   handlePageClick = data => {
     this.setState({ currentPage: data.selected })
     console.log(data.selected)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   render() {
@@ -96,18 +97,19 @@ export class List extends Component {
       activeType,
       pages,
       animesPerPage,
-      currentPage
+      currentPage,
     } = this.state
+
     const {
       match: {
-        params: { season, year }
-      }
+        params: { season, year },
+      },
     } = this.props
 
     console.log(animes)
 
     const renderAnimes = loading
-      ? Array.from('dummyobj').map((_, i) => <Loader key={i} />)
+      ? Array.from('dummyobjects').map((_, i) => <Loader key={i} />)
       : animes
           .filter(anime => {
             if (activeType !== 'All') return anime.type === activeType
