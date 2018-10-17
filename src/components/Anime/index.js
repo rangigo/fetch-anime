@@ -46,7 +46,7 @@ const Anime = ({
         })
       : '?'
 
-  const studioFontSize = producers.length >= 3 ? '10.8px' : '14px'
+  const studioFontSize = producers.length >= 3 ? '10px' : '12.4px'
 
   const splitSynopsis = synopsis.split(/(\(Source: .+\))|(\[Written by .+\])/g)
 

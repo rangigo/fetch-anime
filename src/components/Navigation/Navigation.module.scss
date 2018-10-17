@@ -1,4 +1,6 @@
 @import '../../vars';
+@import './rectangle-in';
+@import './fade';
 
 .Navigation {
   height: $header-height;
@@ -32,6 +34,7 @@
   padding: 0 5px;
   width: 100%;
   position: relative;
+  @include rectangle-in();
 
   a,
   .DropBtn {
@@ -46,8 +49,8 @@
     height: 100%;
   }
 
-  a:hover {
-    background-color: #919191;
+  a {
+    @include fade();
   }
 
   .DropdownContent {
@@ -61,7 +64,6 @@
 }
 
 .NavigationItem:hover {
-  background-color: #2e8bdd;
   .DropBtn {
     color: white;
   }
