@@ -1,8 +1,8 @@
 /* Rectangle In */
-@import '../../hacks';
-@import '../../mixins';
-@import '../../options';
-@import '../../vars';
+@import './hacks';
+@import './mixins';
+@import './options';
+@import '../vars';
 
 @mixin rectangle-in {
 	@include hacks();
