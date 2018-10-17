@@ -1,11 +1,11 @@
-import React from 'react';
-import Skeleton from 'react-skeleton-loader';
+import React from 'react'
+import Skeleton from 'react-skeleton-loader'
 
-import styles from '../Anime.module.scss';
+import styles from '../Anime.module.scss'
 
 const CustomSkeleton = props => (
   <Skeleton {...props} widthRandomness="0" color="#7c7c85" />
-);
+)
 
 const Loader = () => {
   return (
@@ -40,10 +40,9 @@ const Loader = () => {
             <CustomSkeleton />
           </div>
         </div>
-        <div className="RelateLinks" />
       </div>
     </article>
-  );
-};
+  )
+}
 
-export default Loader;
+export default Loader

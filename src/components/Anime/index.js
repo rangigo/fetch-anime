@@ -1,7 +1,9 @@
-import React from 'react';
-import moment from 'moment-timezone';
+import React from 'react'
+import moment from 'moment-timezone'
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
-import styles from './Anime.module.scss';
+import 'react-perfect-scrollbar/dist/css/styles.css'
+import styles from './Anime.module.scss'
 
 const Anime = ({
   title,
@@ -12,10 +14,11 @@ const Anime = ({
   source,
   episodes,
   synopsis,
+  type,
   url
 }) => {
   const titleFontSize =
-    title.length > 45 ? '12px' : title.length > 37 ? '15px' : '18px';
+    title.length > 45 ? '12px' : title.length > 37 ? '15px' : '18px'
 
   const renderTags =
     genres.length > 0
@@ -25,14 +28,14 @@ const Anime = ({
               <li key={genre.mal_id} className={styles.PluralTags}>
                 {genre.name}
               </li>
-            );
-          else return <li key={genre.mal_id}>{genre.name}</li>;
+            )
+          else return <li key={genre.mal_id}>{genre.name}</li>
         })
-      : '?';
+      : '?'
 
   const tagFontSize =
-    genres.length >= 7 ? '10px' : genres.length >= 6 ? '10.8px' : '12.5px';
-  const tagLineHeight = genres.length >= 6 ? '1.95' : '1.6';
+    genres.length >= 7 ? '10px' : genres.length >= 5 ? '10.8px' : '12.5px'
+  const tagLineHeight = genres.length >= 6 ? '1.95' : '1.6'
 
   const renderStudios =
     producers.length > 0
@@ -42,14 +45,14 @@ const Anime = ({
               <li key={producer.mal_id} className={styles.PluralStudios}>
                 {producer.name}
               </li>
-            );
-          } else return <li key={producer.mal_id}>{producer.name}</li>;
+            )
+          } else return <li key={producer.mal_id}>{producer.name}</li>
         })
-      : '?';
+      : '?'
 
-  const studioFontSize = producers.length >= 3 ? '10px' : '12.4px';
+  const studioFontSize = producers.length >= 3 ? '10px' : '12.4px'
 
-  const splitSynopsis = synopsis.split(/(\(Source: .+\))|(\[Written by .+\])/g);
+  const splitSynopsis = synopsis.split(/(\(Source: .+\))|(\[Written by .+\])/g)
 
   return (
     <article className={styles.AnimeContainer}>
@@ -71,9 +74,11 @@ const Anime = ({
           {renderTags}
         </ol>
         <div className={styles.PosterContainer}>
-          <div className={styles.Broadcast}>
-            Broadcast: {moment(airing_start).format('dddd hh:mm A')}
-          </div>
+          {type === 'TV' ? (
+            <div className={styles.Broadcast}>
+              Broadcast: {moment(airing_start).format('dddd hh:mm A')}
+            </div>
+          ) : null}
           <img src={image_url} alt={title} />
         </div>
         <div className={styles.AnimeInfo}>
@@ -95,14 +100,15 @@ const Anime = ({
             </div>
           </div>
           <div className={styles.AnimeSynopsis}>
-            <p>{splitSynopsis[0]}</p>
-            <p>{splitSynopsis[1] || splitSynopsis[2]}</p>
+            <PerfectScrollbar>
+              <p>{splitSynopsis[0]}</p>
+              <p>{splitSynopsis[1] || splitSynopsis[2]}</p>
+            </PerfectScrollbar>
           </div>
         </div>
-        <div className="RelateLinks" />
       </div>
     </article>
-  );
-};
+  )
+}
 
-export default Anime;
+export default Anime

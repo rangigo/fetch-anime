@@ -11,7 +11,7 @@
 
 .AnimeContainer {
   display: inline-block;
-  padding: 0 0.8rem 0.8rem 0;
+  padding: 0 1rem 1rem 0;
   box-sizing: border-box;
   position: relative;
   vertical-align: top;
@@ -70,6 +70,7 @@
   line-height: 1.6;
   display: flex;
   justify-content: center;
+  overflow-x: hidden;
 
   li.PluralTags::after {
     white-space: pre;
@@ -163,7 +164,7 @@
 
 .AnimeSynopsis {
   line-height: 1.3;
-  overflow-y: scroll;
+  overflow: hidden;
   padding: 0.5em;
   text-align: left;
   white-space: normal;
