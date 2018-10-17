@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from '../../hoc/axios'
 
 import Anime from '../../components/Anime'
+import Loader from '../../components/Anime/Loader'
 import styles from './List.module.scss'
 
 export class List extends Component {
@@ -67,7 +68,8 @@ export class List extends Component {
     console.log(animes)
 
     const renderAnimes = loading ? (
-      <p>Loading...</p>
+      Array.from('dummyobj')
+        .map((_, i) => <Loader key={i} /> )
     ) : (
       animes
         .filter(anime => {

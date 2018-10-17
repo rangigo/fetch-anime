@@ -41,9 +41,8 @@
     cursor: pointer;
   }
   
-  .TypeActive {
+  .Type:hover, .TypeActive {
     font-weight: 600;
-
     border-bottom: 1px solid white;
   }
 }

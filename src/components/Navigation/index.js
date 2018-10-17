@@ -19,7 +19,7 @@ const Navigation = () => {
           <div className={styles.DropdownContent}>
             <Link to="/list/2018/winter">Winter 2018-2019</Link>
             <Link to="/list/2017/winter">Winter 2017-2018</Link>
-            <Link to="/list/2016/winter">Winter2016-2017</Link>
+            <Link to="/list/2016/winter">Winter 2016-2017</Link>
             <Link to="/list/2015/winter">Winter 2015-2016</Link>
           </div>
         </li>
