@@ -111,10 +111,6 @@ export class List extends Component {
     const renderAnimes = loading
       ? Array.from('dummyobjects').map((_, i) => <Loader key={i} />)
       : animes
-          .filter(anime => {
-            if (activeType !== 'All') return anime.type === activeType
-            else return true
-          })
           .slice(currentPage * animesPerPage, (currentPage + 1) * animesPerPage)
           .map(anime => <Anime key={anime.mal_id} {...anime} />)
 
