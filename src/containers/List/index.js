@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Anime from '../../components/Anime'
 import Loader from '../../components/Anime/Loader'
 import styles from './List.module.scss'
+import ListTitle from '../../components/ListTitle'
+import ListType from '../../components/ListType'
 
 export class List extends Component {
   state = {
@@ -17,6 +19,25 @@ export class List extends Component {
     currentPage: 0,
     animesPerPage: 16,
   }
+
+  static ListTypes = [
+    {
+      value: 'TV',
+      label: 'Television',
+    },
+    {
+      value: 'Movie',
+      label: 'Movies',
+    },
+    {
+      value: 'OVA',
+      label: 'OVA',
+    },
+    {
+      value: 'All',
+      label: 'All',
+    },
+  ]
 
   componentDidMount() {
     this.loadAnimes()
@@ -54,14 +75,14 @@ export class List extends Component {
           ),
       })
 
-      //Set animes by Type
+      // Set animes by Type, default is TV
       await this.setState({
         animes: this.state.data.filter(
           anime => anime.type === this.state.activeType
         ),
       })
 
-      //Set Pages value and Loading to false
+      // Set Pages value for pagination and Loading to false
       await this.setState({
         loading: false,
         pages: this.state.animes.length / this.state.animesPerPage,
@@ -87,7 +108,6 @@ export class List extends Component {
 
   handlePageClick = data => {
     this.setState({ currentPage: data.selected })
-    console.log(data.selected)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -115,51 +135,19 @@ export class List extends Component {
           .slice(currentPage * animesPerPage, (currentPage + 1) * animesPerPage)
           .map(anime => <Anime key={anime.mal_id} {...anime} />)
 
-    const activeTypeClassname = [styles.Type, styles.TypeActive].join(' ')
-
     return (
       <>
         <div className={styles.ListHeader}>
-          <h1>
-            {season} {year}-{+year + 1} Anime
-          </h1>
+          <ListTitle season={season} year={year} />
           <nav>
-            <button
-              className={
-                activeType === 'TV' ? activeTypeClassname : styles.Type
-              }
-              onClick={this.onClickType}
-              value="TV"
-            >
-              Television
-            </button>
-            <button
-              className={
-                activeType === 'Movie' ? activeTypeClassname : styles.Type
-              }
-              onClick={this.onClickType}
-              value="Movie"
-            >
-              Movies
-            </button>
-            <button
-              className={
-                activeType === 'OVA' ? activeTypeClassname : styles.Type
-              }
-              onClick={this.onClickType}
-              value="OVA"
-            >
-              OVA
-            </button>
-            <button
-              className={
-                activeType === 'All' ? activeTypeClassname : styles.Type
-              }
-              onClick={this.onClickType}
-              value="All"
-            >
-              All
-            </button>
+            {List.ListTypes.map(type => (
+              <ListType
+                activeType={activeType}
+                onClickType={this.onClickType}
+                value={type.value}
+                label={type.label}
+              />
+            ))}
           </nav>
         </div>
 
