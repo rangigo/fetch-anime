@@ -34,7 +34,7 @@ const Anime = ({
       : '?'
 
   const tagFontSize =
-    genres.length >= 7 ? '10px' : genres.length >= 5 ? '10.8px' : '12.5px'
+    genres.length >= 7 ? '.59vw' : genres.length >= 5 ? '.75vw' : '12.5px'
   const tagLineHeight = genres.length >= 6 ? '1.95' : '1.6'
 
   const renderStudios =
@@ -50,7 +50,7 @@ const Anime = ({
         })
       : '?'
 
-  const studioFontSize = producers.length >= 3 ? '10px' : '12.4px'
+  const studioFontSize = producers.length >= 3 ? '.6vw' : '.8vw'
 
   const splitSynopsis = synopsis.split(/(\(Source: .+\))|(\[Written by .+\])/g)
 

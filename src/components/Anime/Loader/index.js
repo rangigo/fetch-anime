@@ -4,7 +4,7 @@ import Skeleton from 'react-skeleton-loader'
 import styles from '../Anime.module.scss'
 
 const CustomSkeleton = props => (
-  <Skeleton {...props} widthRandomness="0" color="#7c7c85" />
+  <Skeleton {...props} widthRandomness="0" color="#70818f" />
 )
 
 const Loader = () => {
@@ -12,7 +12,7 @@ const Loader = () => {
     <article className={styles.AnimeContainer}>
       <div className={styles.AnimeCard}>
         <h3 className={styles.MainTitle}>
-          <CustomSkeleton width="300px" color="#7c7c85" />
+          <CustomSkeleton width="300px" />
         </h3>
         <ol className={styles.AnimeTags} style={{ border: 'none' }}>
           <CustomSkeleton width="200px" height="65%" />

@@ -1,6 +1,7 @@
 @import './hacks';
 @import './mixins';
 @import './options';
+@import '../vars';
 
 /* Fade */
 @mixin fade {
@@ -12,7 +13,7 @@
 	&:hover,
 	&:focus,
 	&:active {
-		background-color: #919191;
+		background-color: $dark-text-color;
 		color: white;
 	}
 }

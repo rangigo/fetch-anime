@@ -8,11 +8,11 @@
   box-sizing: border-box;
 }
 
-.ListTitle {
+.ListHeader {
   text-align: left;
   margin-bottom: 10px;
   padding: 20px 0 0 20px;
-  border-bottom: 1px solid #3e3e40;
+  border-bottom: 1px solid $border-color;
   white-space: nowrap;
 
   h1 {
@@ -26,25 +26,28 @@
 
   nav {
     display: inline-block;
-    height: 100%;
+    position: relative;
   }
 
   .Type {
     background: none;
     border: none;
     outline: none;
-    color: inherit;
+    color: $dark-text-color;
     padding: 0;
-    margin: 0 20px;
+    margin: 0 20px -1px 20px;
     font-family: inherit;
     font-size: 16px;
     line-height: 2.6;
     cursor: pointer;
+    font-weight: 600;
+    border-bottom: 1px solid inherit;
+    position: relative;
   }
 
   .Type:hover,
   .TypeActive {
-    font-weight: 600;
+    color: inherit;
     border-bottom: 1px solid white;
   }
 }
@@ -65,7 +68,7 @@
 
   .PageActive {
     a {
-      color: #445565 !important;
+      color: $main-color !important;
       background-color: #e3e7eb !important;
       border-color: #ced4da !important;
     }
@@ -86,7 +89,7 @@
       @include fade();
 
       &:hover {
-        color: #445565 !important;
+        color: $main-color !important;
         background-color: #e3e7eb !important;
         border-color: #ced4da !important;
       }
@@ -99,5 +102,6 @@
     min-width: 1rem;
     background-color: $main-color;
     cursor: default;
+    color: $dark-text-color;
   }
 }

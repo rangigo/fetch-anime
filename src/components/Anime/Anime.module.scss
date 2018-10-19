@@ -1,7 +1,7 @@
 @import '../../vars';
 
 @mixin borderBottom() {
-  border-bottom: 1px solid #fffdfd49;
+  border-bottom: 1px solid $border-color;
 }
 
 @mixin animeInfoMixIn() {
@@ -38,7 +38,7 @@
 
 .AnimeCard {
   background-color: $main-color;
-  border: 1px solid #ccc;
+  border: 1px solid $border-color;
   border-radius: 3px;
   font-size: 0.9em;
   line-height: 1;
@@ -71,6 +71,7 @@
   display: flex;
   justify-content: center;
   overflow-x: hidden;
+  color: $dark-text-color;
 
   li.PluralTags::after {
     white-space: pre;
@@ -152,6 +153,7 @@
 
 .AnimeDate {
   @include animeInfoMixIn();
+  font-size: .82vw;
 }
 
 .AnimeMetaData {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactPaginate from 'react-paginate'
 import axios from '../../hoc/axios'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import Anime from '../../components/Anime'
 import Loader from '../../components/Anime/Loader'
@@ -119,7 +119,7 @@ export class List extends Component {
 
     return (
       <>
-        <div className={styles.ListTitle}>
+        <div className={styles.ListHeader}>
           <h1>
             {season} {year}-{+year + 1} Anime
           </h1>
@@ -162,9 +162,11 @@ export class List extends Component {
             </button>
           </nav>
         </div>
+
         <div className={styles.ListContainer}>
           {renderAnimes.length === 0 ? 'No animes found.' : renderAnimes}
         </div>
+
         {loading ? null : (
           <div className={styles.ListFooter}>
             <ReactPaginate
