@@ -1,4 +1,5 @@
 @import '../../vars';
+@import '../../mixins/fade';
 
 @mixin borderBottom() {
   border-bottom: 1px solid $border-color;
@@ -73,6 +74,15 @@
   justify-content: center;
   overflow-x: hidden;
   color: $dark-text-color;
+
+  li {
+    a {
+      text-decoration: none;
+      color: inherit;
+      @include fade('transparent');
+    }
+
+  }
 
   li.PluralTags::after {
     white-space: pre;

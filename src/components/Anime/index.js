@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import moment from 'moment-timezone'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 
@@ -41,10 +42,15 @@ const Anime = ({
           if (i !== genres.length - 1)
             return (
               <li key={genre.mal_id} className={styles.PluralTags}>
-                {genre.name}
+                <Link to={`/list/tags/${genre.mal_id}`}>{genre.name}</Link>
               </li>
             )
-          else return <li key={genre.mal_id}>{genre.name}</li>
+          else
+            return (
+              <li key={genre.mal_id}>
+                <Link to={`/list/tags/${genre.mal_id}`}>{genre.name}</Link>
+              </li>
+            )
         })
       : '?'
 

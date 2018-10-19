@@ -17,8 +17,10 @@ export class List extends Component {
     activeType: 'TV',
     pages: 1,
     currentPage: 0,
-    animesPerPage: 16,
+    animesPerPage: 12,
     viewWidth: window.innerWidth,
+    err: null,
+    currentGenre: '',
   }
 
   static ListTypes = [
@@ -51,7 +53,8 @@ export class List extends Component {
   componentDidUpdate(prevProps) {
     if (
       this.props.match.params.season !== prevProps.match.params.season ||
-      this.props.match.params.year !== prevProps.match.params.year
+      this.props.match.params.year !== prevProps.match.params.year ||
+      this.props.match.params.tag !== prevProps.match.params.tag
     ) {
       this.loadAnimes()
     }
@@ -65,15 +68,20 @@ export class List extends Component {
 
   loadAnimes = async () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
+
     const {
       match: {
-        params: { season, year },
+        params: { season, year, tag },
       },
     } = this.props
 
     try {
       this.setState({ loading: true })
-      const res = await axios.get(`/season/${year}/${season}`)
+
+      // Make API calls base on parameters
+      const res = tag
+        ? await axios.get(`/genre/anime/${tag}`)
+        : await axios.get(`/season/${year}/${season}`)
 
       // Set initial data
       await this.setState({
@@ -83,6 +91,7 @@ export class List extends Component {
             (a, b) =>
               a.members < b.members ? 1 : a.members > b.members ? -1 : 0
           ),
+        currentGenre: res.data.mal_url ? res.data.mal_url.name : '',
       })
 
       // Set animes by Type, default is TV
@@ -101,7 +110,7 @@ export class List extends Component {
         pages: this.state.animes.length / this.state.animesPerPage,
       })
     } catch (err) {
-      console.log(err)
+      this.setState({ err: err.res.data })
     }
   }
 
@@ -132,6 +141,8 @@ export class List extends Component {
       animesPerPage,
       currentPage,
       viewWidth,
+      err,
+      currentGenre,
     } = this.state
 
     const {
@@ -141,19 +152,30 @@ export class List extends Component {
     } = this.props
 
     // console.log(animes)
+    console.log(err)
 
-    const renderAnimes = loading
-      ? Array.from('dummyobjects').map((_, i) => <Loader key={i} />)
-      : animes
-          .slice(currentPage * animesPerPage, (currentPage + 1) * animesPerPage)
-          .map(anime => (
-            <Anime key={anime.mal_id} {...anime} viewWidth={viewWidth} />
-          ))
+    const renderAnimes = err
+      ? 'Something is wrong please reload the page!'
+      : loading
+        ? Array.from('dummyobjects').map((_, i) => <Loader key={i} />)
+        : animes
+            .slice(
+              currentPage * animesPerPage,
+              (currentPage + 1) * animesPerPage
+            )
+            .map(anime => (
+              <Anime key={anime.mal_id} {...anime} viewWidth={viewWidth} />
+            ))
 
     return (
       <>
         <div className={styles.ListHeader}>
-          <ListTitle season={season} year={year} />
+          <ListTitle
+            season={season}
+            year={year}
+            genre={currentGenre}
+            loading={loading}
+          />
           <nav>
             {List.ListTypes.map(type => (
               <ListType
