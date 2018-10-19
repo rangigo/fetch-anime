@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactPaginate from 'react-paginate'
 import axios from '../../hoc/axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Anime from '../../components/Anime'
 import Loader from '../../components/Anime/Loader'
@@ -12,7 +13,7 @@ export class List extends Component {
     animes: [],
     loading: false,
     activeType: 'TV',
-    pages: 10,
+    pages: 1,
     currentPage: 0,
     animesPerPage: 16,
   }
@@ -167,8 +168,8 @@ export class List extends Component {
         {loading ? null : (
           <div className={styles.ListFooter}>
             <ReactPaginate
-              previousLabel={<i className="fas fa-arrow-left" />}
-              nextLabel={<i className="fas fa-arrow-right" />}
+              previousLabel={<FontAwesomeIcon icon="arrow-left" />}
+              nextLabel={<FontAwesomeIcon icon="arrow-right" />}
               breakClassName={styles.BreakLabel}
               pageCount={pages}
               marginPagesDisplayed={2}

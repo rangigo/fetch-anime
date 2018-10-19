@@ -5,9 +5,17 @@ import Navigation from './components/Navigation'
 import List from './containers/List'
 import styles from './App.module.scss'
 
-class App extends Component {
+import { library } from '@fortawesome/fontawesome-svg-core'
+import {
+  faCaretDown,
+  faArrowLeft,
+  faArrowRight,
+} from '@fortawesome/free-solid-svg-icons'
 
+library.add(faCaretDown, faArrowLeft, faArrowRight)
+class App extends Component {
   render() {
+    console.log(library)
     return (
       <div className={styles.App}>
         <Navigation />

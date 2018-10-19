@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import logo from '../../assets/logo.png'
 import styles from './Navigation.module.scss'
 
@@ -14,7 +16,7 @@ const Navigation = () => {
       <ul className={styles.NavigationItems}>
         <li className={styles.NavigationItem}>
           <div className={styles.DropBtn}>
-            Winter <i className="fas fa-caret-down" />
+            Winter <FontAwesomeIcon icon='caret-down' />
           </div>
           <div className={styles.DropdownContent}>
             <Link to="/list/2018/winter">Winter 2018-2019</Link>
@@ -25,7 +27,7 @@ const Navigation = () => {
         </li>
         <li className={styles.NavigationItem}>
           <div className={styles.DropBtn}>
-            Spring <i className="fas fa-caret-down" />
+            Spring <FontAwesomeIcon icon='caret-down' />
           </div>
           <div className={styles.DropdownContent}>
             <Link to="/list/2018/spring">Spring 2018-2019</Link>
@@ -36,7 +38,7 @@ const Navigation = () => {
         </li>
         <li className={styles.NavigationItem}>
           <div className={styles.DropBtn}>
-            Summer <i className="fas fa-caret-down" />
+            Summer <FontAwesomeIcon icon='caret-down' />
           </div>
           <div className={styles.DropdownContent}>
             <Link to="/list/2018/summer">Summer 2018-2019</Link>
@@ -47,9 +49,9 @@ const Navigation = () => {
         </li>
         <li className={styles.NavigationItem}>
           <div className={styles.DropBtn}>
-            Fall <i className="fas fa-caret-down" />
+            Fall <FontAwesomeIcon icon='caret-down' />
           </div>
-          <div className={styles.DropdownContent} style={{left: -59}}>
+          <div className={styles.DropdownContent} style={{ left: -59 }}>
             <Link to="/list/2018/fall">Fall 2018-2019</Link>
             <Link to="/list/2017/fall">Fall 2017-2018</Link>
             <Link to="/list/2016/fall">Fall 2016-2017</Link>
