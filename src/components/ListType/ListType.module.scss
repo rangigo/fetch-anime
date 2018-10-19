@@ -1,4 +1,5 @@
 @import '../../vars';
+@import '../../mixins/fade';
 
 .Type {
   background: none;
@@ -14,6 +15,8 @@
   font-weight: 600;
   border-bottom: 1px solid inherit;
   position: relative;
+
+  @include fade('transparent');
 }
 
 .Type:hover,

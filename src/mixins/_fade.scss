@@ -4,16 +4,16 @@
 @import '../vars';
 
 /* Fade */
-@mixin fade {
-	@include hacks();
-	overflow: hidden;
-	@include prefixed(transition-duration, $mediumDuration);
-	@include prefixed(transition-property, "color, background-color");
+@mixin fade($bg-colour: null) {
+  @include hacks();
+  overflow: hidden;
+  @include prefixed(transition-duration, $mediumDuration);
+  @include prefixed(transition-property, 'color, background-color');
 
-	&:hover,
-	&:focus,
-	&:active {
-		background-color: $dark-text-color;
-		color: white;
-	}
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: if($bg-colour, $bg-colour, $dark-text-color);
+    color: white;
+  }
 }
