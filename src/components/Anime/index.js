@@ -15,10 +15,43 @@ const Anime = ({
   episodes,
   synopsis,
   type,
-  url
+  url,
+  viewWidth,
 }) => {
-  const titleFontSize =
-    title.length > 45 ? '12px' : title.length > 37 ? '15px' : '18px'
+  console.log(viewWidth)
+  let titleFontSize, studioFontSize, tagFontSize, tagLineHeight, dateFontSize
+
+  titleFontSize =
+    title.length > 50 ? '.74vw' : title.length > 40 ? '.9vw' : '18px'
+
+  tagFontSize =
+    genres.length >= 7
+      ? '.565vw'
+      : genres.length >= 6
+        ? '.64vw'
+        : genres.length >= 5
+          ? '.75vw'
+          : '12.5px'
+
+  tagLineHeight = genres.length >= 6 ? '1.95' : '1.6'
+
+  studioFontSize = producers.length >= 3 ? '.6vw' : '.88vw'
+
+  dateFontSize = '.82vw'
+
+  const renderStudios =
+    producers.length > 0
+      ? producers.map((producer, i) => {
+          if (i !== producers.length - 1) {
+            return (
+              <li key={producer.mal_id} className={styles.PluralStudios}>
+                {producer.name}
+              </li>
+            )
+          } else return <li key={producer.mal_id}>{producer.name}</li>
+        })
+      : '?'
+  const splitSynopsis = synopsis.split(/(\(Source: .+\))|(\[Written by .+\])/g)
 
   const renderTags =
     genres.length > 0
@@ -33,26 +66,41 @@ const Anime = ({
         })
       : '?'
 
-  const tagFontSize =
-    genres.length >= 7 ? '.59vw' : genres.length >= 5 ? '.75vw' : '12.5px'
-  const tagLineHeight = genres.length >= 6 ? '1.95' : '1.6'
+  if (viewWidth < 1600) {
+    titleFontSize =
+      title.length > 50 ? '.98vw' : title.length > 40 ? '1.3vw' : '1.37vw'
 
-  const renderStudios =
-    producers.length > 0
-      ? producers.map((producer, i) => {
-          if (i !== producers.length - 1) {
-            return (
-              <li key={producer.mal_id} className={styles.PluralStudios}>
-                {producer.name}
-              </li>
-            )
-          } else return <li key={producer.mal_id}>{producer.name}</li>
-        })
-      : '?'
+    tagFontSize =
+      genres.length >= 8
+        ? '.7vw'
+        : genres.length >= 7
+          ? '.8vw'
+          : genres.length >= 6
+            ? '.9vw'
+            : '1vw'
 
-  const studioFontSize = producers.length >= 3 ? '.6vw' : '.8vw'
+    studioFontSize = producers.length >= 3 ? '.93vw' : '1.18vw'
+    dateFontSize = '1.18vw'
+  }
 
-  const splitSynopsis = synopsis.split(/(\(Source: .+\))|(\[Written by .+\])/g)
+  if (viewWidth < 1200) {
+    titleFontSize = title.length > 50 ? '1.45vw' : '1.8vw'
+    tagFontSize =
+      genres.length >= 8
+        ? '1.05vw'
+        : genres.length >= 7
+          ? '1.12vw'
+          : genres.length >= 6
+            ? '1.12vw'
+            : '1.38vw'
+    studioFontSize = '1.38vw'
+    dateFontSize = '1.38vw'
+  }
+
+  if (viewWidth < 930) {
+    tagFontSize = genres.length >= 6 ? '1.1vw' : '1.4vw'
+    if (producers.length >= 3) studioFontSize = '1.2vw'
+  }
 
   return (
     <article className={styles.AnimeContainer}>
@@ -88,7 +136,7 @@ const Anime = ({
           >
             {renderStudios}
           </ul>
-          <div className={styles.AnimeDate}>
+          <div className={styles.AnimeDate} style={{ fontSize: dateFontSize }}>
             {moment(airing_start)
               .tz('Europe/Helsinki')
               .format('MMM Do YYYY, h:mm A z')}

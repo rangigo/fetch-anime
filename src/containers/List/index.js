@@ -18,6 +18,7 @@ export class List extends Component {
     pages: 1,
     currentPage: 0,
     animesPerPage: 16,
+    viewWidth: window.innerWidth,
   }
 
   static ListTypes = [
@@ -40,7 +41,9 @@ export class List extends Component {
   ]
 
   componentDidMount() {
+    window.addEventListener('resize', this.updateViewWidth)
     this.loadAnimes()
+    //Resize window => number of coins display shorten
     // axios.get('/anime/37349').then(res => console.log(res.data))
     // axios.get('/anime/36999').then(res => console.log(res.data))
   }
@@ -53,6 +56,12 @@ export class List extends Component {
       this.loadAnimes()
     }
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateViewWidth)
+  }
+
+  updateViewWidth = () => this.setState({ viewWidth: window.innerWidth })
 
   loadAnimes = async () => {
     const {
@@ -78,7 +87,10 @@ export class List extends Component {
       // Set animes by Type, default is TV
       await this.setState({
         animes: this.state.data.filter(
-          anime => anime.type === this.state.activeType
+          anime =>
+            this.state.activeType !== 'All'
+              ? anime.type === this.state.activeType
+              : true
         ),
       })
 
@@ -94,10 +106,9 @@ export class List extends Component {
 
   onClickType = e => {
     const { value } = e.target
-    const animesByType = this.state.data.filter(anime => {
-      if (value !== 'All') return anime.type === value
-      else return true
-    })
+    const animesByType = this.state.data.filter(
+      anime => (value !== 'All' ? anime.type === value : true)
+    )
     this.setState({
       activeType: value,
       animes: animesByType,
@@ -119,6 +130,7 @@ export class List extends Component {
       pages,
       animesPerPage,
       currentPage,
+      viewWidth,
     } = this.state
 
     const {
@@ -127,13 +139,15 @@ export class List extends Component {
       },
     } = this.props
 
-    console.log(animes)
+    // console.log(animes)
 
     const renderAnimes = loading
       ? Array.from('dummyobjects').map((_, i) => <Loader key={i} />)
       : animes
           .slice(currentPage * animesPerPage, (currentPage + 1) * animesPerPage)
-          .map(anime => <Anime key={anime.mal_id} {...anime} />)
+          .map(anime => (
+            <Anime key={anime.mal_id} {...anime} viewWidth={viewWidth} />
+          ))
 
     return (
       <>
@@ -146,6 +160,7 @@ export class List extends Component {
                 onClickType={this.onClickType}
                 value={type.value}
                 label={type.label}
+                key={type.value}
               />
             ))}
           </nav>

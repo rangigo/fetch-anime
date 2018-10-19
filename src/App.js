@@ -15,7 +15,6 @@ import {
 library.add(faCaretDown, faArrowLeft, faArrowRight)
 class App extends Component {
   render() {
-    console.log(library)
     return (
       <div className={styles.App}>
         <Navigation />

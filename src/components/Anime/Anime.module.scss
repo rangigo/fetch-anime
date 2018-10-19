@@ -49,8 +49,9 @@
 .MainTitle {
   font-size: 18px;
   text-overflow: ellipsis;
-  line-height: 1.8rem;
-  margin: 0.3rem 0 0;
+  // line-height: 1.8rem;
+  padding: 0;
+  margin: 0.9rem 0 0.6rem 0;
   overflow: hidden;
   font-weight: 500;
   text-decoration: none;
@@ -64,7 +65,7 @@
 
 .AnimeTags {
   @include borderBottom();
-  margin: 0;
+  margin: 1.5px 0;
   padding: 0;
   list-style: none;
   line-height: 1.6;
@@ -153,7 +154,6 @@
 
 .AnimeDate {
   @include animeInfoMixIn();
-  font-size: .82vw;
 }
 
 .AnimeMetaData {

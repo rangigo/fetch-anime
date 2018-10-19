@@ -4,7 +4,7 @@ import Skeleton from 'react-skeleton-loader'
 import styles from '../Anime.module.scss'
 
 const CustomSkeleton = props => (
-  <Skeleton {...props} widthRandomness="0" color="#70818f" />
+  <Skeleton width="10vw" widthRandomness="0" color="#70818f" {...props} />
 )
 
 const Loader = () => {
