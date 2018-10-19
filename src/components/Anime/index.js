@@ -18,8 +18,37 @@ const Anime = ({
   url,
   viewWidth,
 }) => {
-  console.log(viewWidth)
   let titleFontSize, studioFontSize, tagFontSize, tagLineHeight, dateFontSize
+
+  const renderStudios =
+    producers.length > 0
+      ? producers.map((producer, i) => {
+          if (i !== producers.length - 1) {
+            return (
+              <li key={producer.mal_id} className={styles.PluralStudios}>
+                {producer.name}
+              </li>
+            )
+          } else return <li key={producer.mal_id}>{producer.name}</li>
+        })
+      : '?'
+
+  const splitSynopsis = synopsis.split(/(\(Source: .+\))|(\[Written by .+\])/g)
+
+  const renderTags =
+    genres.length > 0
+      ? genres.map((genre, i) => {
+          if (i !== genres.length - 1)
+            return (
+              <li key={genre.mal_id} className={styles.PluralTags}>
+                {genre.name}
+              </li>
+            )
+          else return <li key={genre.mal_id}>{genre.name}</li>
+        })
+      : '?'
+
+  // Handle responsive font-size based on viewwidth
 
   titleFontSize =
     title.length > 50 ? '.74vw' : title.length > 40 ? '.9vw' : '18px'
@@ -38,33 +67,6 @@ const Anime = ({
   studioFontSize = producers.length >= 3 ? '.6vw' : '.88vw'
 
   dateFontSize = '.82vw'
-
-  const renderStudios =
-    producers.length > 0
-      ? producers.map((producer, i) => {
-          if (i !== producers.length - 1) {
-            return (
-              <li key={producer.mal_id} className={styles.PluralStudios}>
-                {producer.name}
-              </li>
-            )
-          } else return <li key={producer.mal_id}>{producer.name}</li>
-        })
-      : '?'
-  const splitSynopsis = synopsis.split(/(\(Source: .+\))|(\[Written by .+\])/g)
-
-  const renderTags =
-    genres.length > 0
-      ? genres.map((genre, i) => {
-          if (i !== genres.length - 1)
-            return (
-              <li key={genre.mal_id} className={styles.PluralTags}>
-                {genre.name}
-              </li>
-            )
-          else return <li key={genre.mal_id}>{genre.name}</li>
-        })
-      : '?'
 
   if (viewWidth < 1600) {
     titleFontSize =
@@ -114,7 +116,6 @@ const Anime = ({
         >
           {title}
         </a>
-
         <ol
           className={styles.AnimeTags}
           style={{ fontSize: tagFontSize, lineHeight: tagLineHeight }}

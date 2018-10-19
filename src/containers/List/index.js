@@ -64,6 +64,7 @@ export class List extends Component {
   updateViewWidth = () => this.setState({ viewWidth: window.innerWidth })
 
   loadAnimes = async () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     const {
       match: {
         params: { season, year },
