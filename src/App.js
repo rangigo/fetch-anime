@@ -21,7 +21,7 @@ class App extends Component {
         <Navigation />
         <div className={styles.Content}>
           <Switch>
-            <Route path='/list/tags/:tag' component={List} />
+            <Route path='/list/genres/:genre' component={List} />
             <Route path="/list/:year/:season" component={List} />
             <Redirect to="/list/2018/fall" />
           </Switch>
