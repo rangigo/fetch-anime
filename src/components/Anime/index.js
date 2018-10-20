@@ -6,91 +6,72 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import styles from './Anime.module.scss'
 
-const CURRENT_SEASON_START = '2018-10-01'
-const CURRENT_SEASON_END = '2018-12-31'
-
 const Anime = ({
-  title,
+  title: { english, romaji, native },
   genres,
-  image_url,
-  producers,
-  airing_start,
+  coverImage,
+  studios: { nodes: studios },
+  startDate,
   source,
   episodes,
-  synopsis,
-  type,
-  url,
+  description,
+  format,
+  idMal,
   viewWidth,
-  continuing,
 }) => {
   let titleFontSize, studioFontSize, tagFontSize, tagLineHeight, dateFontSize
 
+  const title = english ? english : romaji
+
   const renderStudios =
-    producers.length > 0
-      ? producers.map((producer, i) => {
-          if (i !== producers.length - 1) {
+    studios.length > 0
+      ? studios.map((studio, i) => {
+          if (i !== studios.length - 1) {
             return (
-              <li key={producer.mal_id} className={styles.PluralStudios}>
-                {producer.name}
+              <li key={studio.name} className={styles.PluralStudios}>
+                {studio.name}
               </li>
             )
-          } else return <li key={producer.mal_id}>{producer.name}</li>
+          } else return <li key={studio.name}>{studio.name}</li>
         })
       : '?'
 
-  const splitSynopsis = synopsis.split(/(\(Source: .+\))|(\[Written by .+\])/g)
+  const splitDescription = description.split(
+    /(\(Source: .+\))|(\[Written by .+\])/g
+  )
 
   const renderTags =
     genres.length > 0
       ? genres.map((genre, i) => {
           if (i !== genres.length - 1)
             return (
-              <li key={genre.mal_id} className={styles.PluralTags}>
+              <li key={genre} className={styles.PluralTags}>
                 <Link
                   to={{
-                    pathname: `/list/tags/${genre.mal_id}`,
-                    state: { name: genre.name },
+                    pathname: `/list/genres/${genre}`,
+                    state: { name: genre },
                   }}
                 >
-                  {genre.name}
+                  {genre}
                 </Link>
               </li>
             )
           else
             return (
-              <li key={genre.mal_id}>
+              <li key={genre}>
                 <Link
                   to={{
-                    pathname: `/list/tags/${genre.mal_id}`,
-                    state: { name: genre.name },
+                    pathname: `/list/genres/${genre.mal_id}`,
+                    state: { name: genre },
                   }}
                 >
-                  {genre.name}
+                  {genre}
                 </Link>
               </li>
             )
         })
       : '?'
 
-  let broadcastTime = (
-    <div className={styles.Broadcast}>
-      Broadcast: {moment(airing_start).format('dddd hh:mm A')}
-    </div>
-  )
-  if (type === 'TV') {
-    if (!continuing) {
-      if (
-        !moment(airing_start).isBetween(
-          CURRENT_SEASON_START,
-          CURRENT_SEASON_END
-        )
-      ) {
-        broadcastTime = null
-      }
-    }
-  } else {
-    broadcastTime = null
-  }
   // Handle responsive font-size based on viewwidth
 
   titleFontSize =
@@ -107,7 +88,7 @@ const Anime = ({
 
   tagLineHeight = genres.length >= 6 ? '1.95' : '1.6'
 
-  studioFontSize = producers.length >= 3 ? '.6vw' : '.88vw'
+  studioFontSize = studios.length >= 3 ? '.6vw' : '.88vw'
 
   dateFontSize = '.82vw'
 
@@ -124,7 +105,7 @@ const Anime = ({
             ? '.9vw'
             : '1vw'
 
-    studioFontSize = producers.length >= 3 ? '.93vw' : '1.18vw'
+    studioFontSize = studios.length >= 3 ? '.93vw' : '1.18vw'
     dateFontSize = '1.18vw'
   }
 
@@ -144,7 +125,7 @@ const Anime = ({
 
   if (viewWidth < 930) {
     tagFontSize = genres.length >= 6 ? '1.1vw' : '1.4vw'
-    if (producers.length >= 3) studioFontSize = '1.2vw'
+    if (studios.length >= 3) studioFontSize = '1.2vw'
   }
 
   return (
@@ -153,7 +134,7 @@ const Anime = ({
         <a
           className={styles.MainTitle}
           style={{ fontSize: titleFontSize }}
-          href={url}
+          href={`https://myanimelist.net/anime/${idMal}`}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -166,8 +147,10 @@ const Anime = ({
           {renderTags}
         </ol>
         <div className={styles.PosterContainer}>
-          {broadcastTime}
-          <img src={image_url} alt={title} />
+          <div className={styles.Broadcast}>
+            {/* Broadcast: {moment(airing_start).format('dddd hh:mm A')} */}
+          </div>
+          <img src={coverImage.large} alt={title} />
         </div>
         <div className={styles.AnimeInfo}>
           <ul
@@ -177,7 +160,7 @@ const Anime = ({
             {renderStudios}
           </ul>
           <div className={styles.AnimeDate} style={{ fontSize: dateFontSize }}>
-            {moment(airing_start)
+            {moment(`${startDate.day}-${startDate.month}-${startDate.year}`)
               .tz('Europe/Helsinki')
               .format('MMM Do YYYY, h:mm A z')}
           </div>
@@ -187,10 +170,10 @@ const Anime = ({
               {episodes ? episodes : '?'} eps
             </div>
           </div>
-          <div className={styles.AnimeSynopsis}>
+          <div className={styles.AnimeDescription}>
             <PerfectScrollbar>
-              <p>{splitSynopsis[0]}</p>
-              <p>{splitSynopsis[1] || splitSynopsis[2]}</p>
+              <p>{splitDescription[0]}</p>
+              <p>{splitDescription[1] || splitDescription[2]}</p>
             </PerfectScrollbar>
           </div>
         </div>
