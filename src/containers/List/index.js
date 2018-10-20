@@ -15,7 +15,7 @@ const ListTypes = [
     label: 'Television',
   },
   {
-    value: 'Movie',
+    value: 'MOVIE',
     label: 'Movies',
   },
   {
@@ -27,6 +27,55 @@ const ListTypes = [
     label: 'All',
   },
 ]
+
+const query = `
+query ($season: MediaSeason, $seasonYear: Int, $page: Int, $perPage:Int) {
+  Page(page: $page, perPage:$perPage) {
+    pageInfo {
+      total
+      perPage
+      currentPage
+      lastPage
+      hasNextPage
+    }
+    media(season: $season, seasonYear: $seasonYear, type: ANIME, sort: POPULARITY_DESC) {
+      # siteUrl
+      idMal
+      genres
+      episodes
+      source
+    	studios(isMain: true) {
+        nodes {
+          name
+        }
+      }
+      # externalLinks {
+      #   url
+      #   site
+      # }
+      title {
+        english
+        romaji
+        native
+      }
+      nextAiringEpisode {
+        timeUntilAiring
+        episode
+      }
+      startDate {
+        year
+        month
+        day
+      }
+      description
+      coverImage {
+        large
+      }
+      format
+    }
+  }
+}
+`
 
 export class List extends Component {
   state = {
@@ -70,7 +119,7 @@ export class List extends Component {
 
     const {
       match: {
-        params: { season, year, tag },
+        params: { season, year, genre },
       },
     } = this.props
 
@@ -86,18 +135,22 @@ export class List extends Component {
       })
 
       // Make API calls base on parameters
-      const res = tag
-        ? await axios.get(`/genre/anime/${tag}`)
-        : await axios.get(`/season/${year}/${season}`)
+      const res = genre
+        ? await axios.post('', {})
+        : await axios.post('', {
+            query,
+            variables: {
+              season: season.toUpperCase(),
+              seasonYear: year,
+              page: this.state.currentPage + 1,
+              perPage: this.state.animesPerPage,
+            },
+          })
+      console.log(res.data.data.Page)
 
       // Set initial data
       this.setState({
-        data: res.data.anime
-          .filter(anime => anime.r18 === false)
-          .sort(
-            (a, b) =>
-              a.members < b.members ? 1 : a.members > b.members ? -1 : 0
-          ),
+        data: res.data.data.Page.media,
         // This handles displaying ListTitle if the user want to navigate genres
         // not through anime tags
         // but rather through pasting the link ex: /list/tags/7
@@ -113,7 +166,7 @@ export class List extends Component {
         animes: this.state.data.filter(
           anime =>
             this.state.activeType !== 'All'
-              ? anime.type === this.state.activeType
+              ? anime.format === this.state.activeType
               : true
         ),
       })
@@ -177,7 +230,7 @@ export class List extends Component {
               (currentPage + 1) * animesPerPage
             )
             .map(anime => (
-              <Anime key={anime.mal_id} {...anime} viewWidth={viewWidth} />
+              <Anime key={anime.idMal} {...anime} viewWidth={viewWidth} />
             ))
 
     return (
