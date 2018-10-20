@@ -9,13 +9,32 @@ import styles from './List.module.scss'
 import ListTitle from '../../components/ListTitle'
 import ListType from '../../components/ListType'
 
+const ListTypes = [
+  {
+    value: 'TV',
+    label: 'Television',
+  },
+  {
+    value: 'Movie',
+    label: 'Movies',
+  },
+  {
+    value: 'OVA',
+    label: 'OVA',
+  },
+  {
+    value: 'All',
+    label: 'All',
+  },
+]
+
 export class List extends Component {
   state = {
     data: [],
     animes: [],
     loading: false,
     activeType: 'TV',
-    pages: 1,
+    pages: 0,
     currentPage: 0,
     animesPerPage: 12,
     viewWidth: window.innerWidth,
@@ -23,29 +42,9 @@ export class List extends Component {
     currentGenre: '',
   }
 
-  static ListTypes = [
-    {
-      value: 'TV',
-      label: 'Television',
-    },
-    {
-      value: 'Movie',
-      label: 'Movies',
-    },
-    {
-      value: 'OVA',
-      label: 'OVA',
-    },
-    {
-      value: 'All',
-      label: 'All',
-    },
-  ]
-
   componentDidMount() {
     window.addEventListener('resize', this.updateViewWidth)
     this.loadAnimes()
-    //Resize window => number of coins display shorten
     // axios.get('/anime/37349').then(res => console.log(res.data))
     // axios.get('/anime/36999').then(res => console.log(res.data))
   }
@@ -76,7 +75,15 @@ export class List extends Component {
     } = this.props
 
     try {
-      this.setState({ loading: true })
+      this.setState({
+        loading: true,
+        // Genre route links have nested state to inform name of the genre
+        currentGenre: this.props.location.state
+          ? this.props.location.state.name
+          : '',
+        currentPage: 0,
+        pages: 0,
+      })
 
       // Make API calls base on parameters
       const res = tag
@@ -84,18 +91,25 @@ export class List extends Component {
         : await axios.get(`/season/${year}/${season}`)
 
       // Set initial data
-      await this.setState({
+      this.setState({
         data: res.data.anime
           .filter(anime => anime.r18 === false)
           .sort(
             (a, b) =>
               a.members < b.members ? 1 : a.members > b.members ? -1 : 0
           ),
-        currentGenre: res.data.mal_url ? res.data.mal_url.name : '',
+        // This handles displaying ListTitle if the user want to navigate genres
+        // not through anime tags
+        // but rather through pasting the link ex: /list/tags/7
+        currentGenre: this.state.currentGenre
+          ? this.state.currentGenre
+          : res.data.mal_url
+            ? res.data.mal_url.name.split('Anime')[0]
+            : '',
       })
 
       // Set animes by Type, default is TV
-      await this.setState({
+      this.setState({
         animes: this.state.data.filter(
           anime =>
             this.state.activeType !== 'All'
@@ -105,12 +119,12 @@ export class List extends Component {
       })
 
       // Set Pages value for pagination and Loading to false
-      await this.setState({
+      this.setState({
         loading: false,
         pages: this.state.animes.length / this.state.animesPerPage,
       })
     } catch (err) {
-      this.setState({ err: err.res.data })
+      this.setState({ err: err.res.data || err })
     }
   }
 
@@ -151,13 +165,12 @@ export class List extends Component {
       },
     } = this.props
 
-    // console.log(animes)
-    console.log(err)
-
     const renderAnimes = err
       ? 'Something is wrong please reload the page!'
       : loading
-        ? Array.from('dummyobjects').map((_, i) => <Loader key={i} />)
+        ? Array.from('dummyobjects').map((_, i) => (
+            <Loader key={i} viewWidth={viewWidth} />
+          ))
         : animes
             .slice(
               currentPage * animesPerPage,
@@ -170,14 +183,9 @@ export class List extends Component {
     return (
       <>
         <div className={styles.ListHeader}>
-          <ListTitle
-            season={season}
-            year={year}
-            genre={currentGenre}
-            loading={loading}
-          />
+          <ListTitle season={season} year={year} genre={currentGenre} />
           <nav>
-            {List.ListTypes.map(type => (
+            {ListTypes.map(type => (
               <ListType
                 activeType={activeType}
                 onClickType={this.onClickType}
@@ -193,22 +201,20 @@ export class List extends Component {
           {renderAnimes.length === 0 ? 'No animes found.' : renderAnimes}
         </div>
 
-        {loading ? null : (
-          <div className={styles.ListFooter}>
-            <ReactPaginate
-              previousLabel={<FontAwesomeIcon icon="arrow-left" />}
-              nextLabel={<FontAwesomeIcon icon="arrow-right" />}
-              breakClassName={styles.BreakLabel}
-              pageCount={pages}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              forcePage={currentPage}
-              onPageChange={this.handlePageClick}
-              containerClassName={styles.Pagination}
-              activeClassName={styles.PageActive}
-            />
-          </div>
-        )}
+        <div className={styles.ListFooter}>
+          <ReactPaginate
+            previousLabel={<FontAwesomeIcon icon="arrow-left" />}
+            nextLabel={<FontAwesomeIcon icon="arrow-right" />}
+            breakClassName={styles.BreakLabel}
+            pageCount={pages}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            forcePage={currentPage}
+            onPageChange={this.handlePageClick}
+            containerClassName={styles.Pagination}
+            activeClassName={styles.PageActive}
+          />
+        </div>
       </>
     )
   }

@@ -42,13 +42,27 @@ const Anime = ({
           if (i !== genres.length - 1)
             return (
               <li key={genre.mal_id} className={styles.PluralTags}>
-                <Link to={`/list/tags/${genre.mal_id}`}>{genre.name}</Link>
+                <Link
+                  to={{
+                    pathname: `/list/tags/${genre.mal_id}`,
+                    state: { name: genre.name },
+                  }}
+                >
+                  {genre.name}
+                </Link>
               </li>
             )
           else
             return (
               <li key={genre.mal_id}>
-                <Link to={`/list/tags/${genre.mal_id}`}>{genre.name}</Link>
+                <Link
+                  to={{
+                    pathname: `/list/tags/${genre.mal_id}`,
+                    state: { name: genre.name },
+                  }}
+                >
+                  {genre.name}
+                </Link>
               </li>
             )
         })
