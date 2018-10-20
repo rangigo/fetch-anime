@@ -41,8 +41,8 @@
   list-style: none;
   display: inline-flex;
   justify-content: center;
-  border-radius: .25rem;
-  border: .9px solid $main-color;
+  border-radius: 0.25rem;
+  border: 0.9px solid $main-color;
 
   .PageActive {
     a {
@@ -66,10 +66,12 @@
       cursor: pointer;
       @include fade();
 
-      &:hover {
-        color: $main-color !important;
-        background-color: #e3e7eb !important;
-        border-color: #ced4da !important;
+      @media (hover: hover) {
+        &:hover {
+          color: $main-color !important;
+          background-color: #e3e7eb !important;
+          border-color: #ced4da !important;
+        }
       }
     }
   }

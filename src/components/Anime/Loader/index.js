@@ -4,10 +4,19 @@ import Skeleton from 'react-skeleton-loader'
 import styles from '../Anime.module.scss'
 
 const CustomSkeleton = props => (
-  <Skeleton width="10vw" widthRandomness="0" color="#70818f" {...props} />
+  <Skeleton widthRandomness="0" color="#70818f" {...props} />
 )
 
-const Loader = () => {
+const Loader = ({ viewWidth }) => {
+  const width =
+    viewWidth < 930
+      ? '16vw'
+      : viewWidth < 1200
+        ? '17vw'
+        : viewWidth < 1600
+          ? '11vw'
+          : '10vw'
+
   return (
     <article className={styles.AnimeContainer}>
       <div className={styles.AnimeCard}>
@@ -21,23 +30,23 @@ const Loader = () => {
           className={styles.PosterContainer}
           style={{ padding: '5px', border: 'none' }}
         >
-          <CustomSkeleton />
+          <CustomSkeleton width={width} />
         </div>
         <div className={styles.AnimeInfo}>
           <ul className={styles.AnimeStudios} style={{ border: 'none' }}>
-            <CustomSkeleton />
+            <CustomSkeleton width={width} />
           </ul>
           <div className={styles.AnimeDate} style={{ border: 'none' }}>
-            <CustomSkeleton />
+            <CustomSkeleton width={width} />
           </div>
           <div className={styles.AnimeMetaData} style={{ border: 'none' }}>
-            <CustomSkeleton />
+            <CustomSkeleton width={width} />
           </div>
           <div
             className={styles.AnimeSynopsis}
             style={{ overflow: 'hidden', textAlign: 'center' }}
           >
-            <CustomSkeleton />
+            <CustomSkeleton width={width} />
           </div>
         </div>
       </div>

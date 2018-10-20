@@ -10,9 +10,13 @@
   @include prefixed(transition-duration, $mediumDuration);
   @include prefixed(transition-property, 'color, background-color');
 
-  &:hover,
-  &:focus,
-  &:active {
+  @media (hover: none), (hover:on-demand) {
+    &:hover {
+      background-color: inherit;
+      color: inherit;
+    }
+  }
+  &:hover {
     background-color: if($bg-colour, $bg-colour, $dark-text-color);
     color: white;
   }
