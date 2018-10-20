@@ -52,6 +52,15 @@
     }
   }
 
+  .PageDisabled {
+    a, a:hover {
+      color: $darker-text-color !important;
+      background-color: inherit !important;
+      border-color: inherit !important;
+      cursor: not-allowed;
+    }
+  }
+
   li {
     a {
       display: inline-block;

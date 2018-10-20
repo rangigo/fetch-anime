@@ -6,6 +6,9 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import styles from './Anime.module.scss'
 
+const CURRENT_SEASON_START = '2018-10-01'
+const CURRENT_SEASON_END = '2018-12-31'
+
 const Anime = ({
   title,
   genres,
@@ -18,6 +21,7 @@ const Anime = ({
   type,
   url,
   viewWidth,
+  continuing,
 }) => {
   let titleFontSize, studioFontSize, tagFontSize, tagLineHeight, dateFontSize
 
@@ -68,6 +72,25 @@ const Anime = ({
         })
       : '?'
 
+  let broadcastTime = (
+    <div className={styles.Broadcast}>
+      Broadcast: {moment(airing_start).format('dddd hh:mm A')}
+    </div>
+  )
+  if (type === 'TV') {
+    if (!continuing) {
+      if (
+        !moment(airing_start).isBetween(
+          CURRENT_SEASON_START,
+          CURRENT_SEASON_END
+        )
+      ) {
+        broadcastTime = null
+      }
+    }
+  } else {
+    broadcastTime = null
+  }
   // Handle responsive font-size based on viewwidth
 
   titleFontSize =
@@ -143,11 +166,7 @@ const Anime = ({
           {renderTags}
         </ol>
         <div className={styles.PosterContainer}>
-          {type === 'TV' ? (
-            <div className={styles.Broadcast}>
-              Broadcast: {moment(airing_start).format('dddd hh:mm A')}
-            </div>
-          ) : null}
+          {broadcastTime}
           <img src={image_url} alt={title} />
         </div>
         <div className={styles.AnimeInfo}>
