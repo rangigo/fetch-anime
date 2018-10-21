@@ -1,23 +1,24 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import moment from 'moment-timezone'
-import PerfectScrollbar from 'react-perfect-scrollbar'
+import { formatToTimeZone } from 'date-fns-timezone'
+import SimpleBar from 'simplebar-react'
 
-import 'react-perfect-scrollbar/dist/css/styles.css'
+import 'simplebar/dist/simplebar.min.css'
 import styles from './Anime.module.scss'
+import CountdownTime from '../../containers/CountdownTime'
 
 const Anime = ({
   title: { english, romaji, native },
   genres,
   coverImage,
   studios: { nodes: studios },
-  startDate,
   source,
   episodes,
   description,
-  format,
   idMal,
   viewWidth,
+  nextAiringEpisode: { timeUntilAiring, episode },
+  airingSchedule: { nodes },
 }) => {
   let titleFontSize, studioFontSize, tagFontSize, tagLineHeight, dateFontSize
 
@@ -40,12 +41,12 @@ const Anime = ({
     /(\(Source: .+\))|(\[Written by .+\])/g
   )
 
-  const renderTags =
+  const renderGenres =
     genres.length > 0
       ? genres.map((genre, i) => {
           if (i !== genres.length - 1)
             return (
-              <li key={genre} className={styles.PluralTags}>
+              <li key={genre} className={styles.PluralGenres}>
                 <Link
                   to={{
                     pathname: `/list/genres/${genre}`,
@@ -141,14 +142,14 @@ const Anime = ({
           {title}
         </a>
         <ol
-          className={styles.AnimeTags}
+          className={styles.AnimeGenres}
           style={{ fontSize: tagFontSize, lineHeight: tagLineHeight }}
         >
-          {renderTags}
+          {renderGenres}
         </ol>
         <div className={styles.PosterContainer}>
           <div className={styles.Broadcast}>
-            {/* Broadcast: {moment(airing_start).format('dddd hh:mm A')} */}
+            <CountdownTime time={timeUntilAiring} ep={episode} />
           </div>
           <img src={coverImage.large} alt={title} />
         </div>
@@ -160,9 +161,13 @@ const Anime = ({
             {renderStudios}
           </ul>
           <div className={styles.AnimeDate} style={{ fontSize: dateFontSize }}>
-            {moment(`${startDate.day}-${startDate.month}-${startDate.year}`)
-              .tz('Europe/Helsinki')
-              .format('MMM Do YYYY, h:mm A z')}
+            {formatToTimeZone(
+              nodes[0].airingAt * 1000,
+              'D MMM, YYYY [at] HH:mm A z',
+              {
+                timeZone: 'Europe/Helsinki',
+              }
+            )}
           </div>
           <div className={styles.AnimeMetaData}>
             <div className={styles.AnimeSource}>{source}</div>
@@ -171,10 +176,10 @@ const Anime = ({
             </div>
           </div>
           <div className={styles.AnimeDescription}>
-            <PerfectScrollbar>
-              <p>{splitDescription[0]}</p>
+            <SimpleBar style={{ height: '100%', border: 'none' }}>
+              <p dangerouslySetInnerHTML={{ __html: splitDescription[0] }} />
               <p>{splitDescription[1] || splitDescription[2]}</p>
-            </PerfectScrollbar>
+            </SimpleBar>
           </div>
         </div>
       </div>

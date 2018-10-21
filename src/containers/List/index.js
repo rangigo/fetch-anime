@@ -62,16 +62,18 @@ query ($season: MediaSeason, $seasonYear: Int, $page: Int, $perPage:Int) {
         timeUntilAiring
         episode
       }
-      startDate {
-        year
-        month
-        day
-      }
       description
       coverImage {
+        extraLarge
         large
       }
       format
+      airingSchedule(perPage: 1, page: 1) {
+        nodes {
+          airingAt
+          episode
+        }
+      }
     }
   }
 }
@@ -136,8 +138,8 @@ export class List extends Component {
 
       // Make API calls base on parameters
       const res = genre
-        ? await axios.post('', {})
-        : await axios.post('', {
+        ? await axios.post({})
+        : await axios.post('',{
             query,
             variables: {
               season: season.toUpperCase(),
@@ -146,8 +148,7 @@ export class List extends Component {
               perPage: this.state.animesPerPage,
             },
           })
-      console.log(res.data.data.Page)
-
+          console.log(res.data.data.Page.media[0])
       // Set initial data
       this.setState({
         data: res.data.data.Page.media,
@@ -184,7 +185,7 @@ export class List extends Component {
   onClickType = e => {
     const { value } = e.target
     const animesByType = this.state.data.filter(
-      anime => (value !== 'All' ? anime.type === value : true)
+      anime => (value !== 'All' ? anime.format === value : true)
     )
     this.setState({
       activeType: value,

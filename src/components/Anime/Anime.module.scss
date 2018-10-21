@@ -64,7 +64,7 @@
   }
 }
 
-.AnimeTags {
+.AnimeGenres {
   @include borderBottom();
   margin: 1.5px 0;
   padding: 0;
@@ -81,10 +81,9 @@
       color: inherit;
       @include fade('transparent');
     }
-
   }
 
-  li.PluralTags::after {
+  li.PluralGenres::after {
     white-space: pre;
     content: ' · ';
     padding-left: 2px;
@@ -101,8 +100,8 @@
   img {
     display: inline-block;
     vertical-align: middle;
-    max-width: 100%;
-    height: auto;
+    max-width: 185px;
+    height: 100%;
   }
 
   .Broadcast {
@@ -129,8 +128,8 @@
   }
 
   @media screen and (min-width: 40em) {
-    width: 176px;
-    height: 240px;
+    width: 185px;
+    height: 265px;
   }
 }
 
@@ -140,8 +139,8 @@
   height: 194.28571429px;
   max-height: 194.28571429px;
   @media screen and (min-width: 40em) {
-    height: 250px;
-    max-height: 240px;
+    height: 265px;
+    max-height: 265px;
   }
 }
 
@@ -176,7 +175,7 @@
 
 .AnimeDescription {
   line-height: 1.3;
-  overflow: hidden;
+  overflow-y: hidden;
   padding: 0.5em;
   text-align: left;
   white-space: normal;
@@ -184,9 +183,17 @@
 
   p {
     margin: 0;
-    margin-bottom: 1rem;
     font-size: inherit;
     line-height: 1.6;
     text-rendering: optimizeLegibility;
+    &:last-of-type {
+      padding-bottom: 0.5rem;
+    }
+  }
+}
+
+:global {
+  .simplebar-scrollbar:before {
+    background-color: $text-color;
   }
 }
