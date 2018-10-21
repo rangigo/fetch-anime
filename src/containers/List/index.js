@@ -23,13 +23,25 @@ const ListTypes = [
     label: 'OVA',
   },
   {
+    value: 'SPECIAL',
+    label: 'Special',
+  },
+  {
+    value: 'ONA',
+    label: 'ONA',
+  },
+  {
+    value: 'TV_SHORT',
+    label: 'TV Short',
+  },
+  {
     value: 'All',
     label: 'All',
   },
 ]
 
 const query = `
-query ($season: MediaSeason, $seasonYear: Int, $page: Int, $perPage:Int) {
+query ($season: MediaSeason, $seasonYear: Int, $page: Int, $perPage:Int, $genre: String, $format:MediaFormat) {
   Page(page: $page, perPage:$perPage) {
     pageInfo {
       total
@@ -38,10 +50,18 @@ query ($season: MediaSeason, $seasonYear: Int, $page: Int, $perPage:Int) {
       lastPage
       hasNextPage
     }
-    media(season: $season, seasonYear: $seasonYear, type: ANIME, sort: POPULARITY_DESC, , isAdult: false) {
-      # siteUrl
+    media(season: $season, seasonYear: $seasonYear, type: ANIME, sort: POPULARITY_DESC, , isAdult: false, genre: $genre, format: $format) {
+      startDate {
+        year
+        month
+        day
+      }
       id
       idMal
+      trailer {
+        id
+        site
+      }
       genres
       episodes
       duration
@@ -108,10 +128,10 @@ export class List extends Component {
     if (
       this.props.match.params.season !== prevProps.match.params.season ||
       this.props.match.params.year !== prevProps.match.params.year ||
-      this.props.match.params.tag !== prevProps.match.params.tag
+      this.props.match.params.genre !== prevProps.match.params.genre
     ) {
       // Clear the data if props changed
-      this.setState({ data: [] })
+      this.setState({ data: [], animes: [] })
       // Load new data
       this.loadAnimes()
     }
@@ -138,86 +158,126 @@ export class List extends Component {
     try {
       this.setState({
         loading: true,
-        // Genre route links have nested state to inform name of the genre
-        currentGenre: this.props.location.state
-          ? this.props.location.state.name
-          : '',
         currentPage: 0,
         pages: 0,
+        activeType: 'TV',
+        currentGenre: '',
       })
 
       // Make API calls base on parameters
-      const res = genre
-        ? await axios.post({})
-        : await axios.post('', {
-            query,
-            variables: {
-              season: season.toUpperCase(),
-              seasonYear: year,
-              page: this.state.fetchPage,
-            },
-          })
-      const data = res.data.data.Page
-      console.log(data)
-      // Set initial data
-      this.setState(
-        {
-          data: this.state.data.concat(data.media),
-          hasNextPage: data.pageInfo.hasNextPage,
-          // This handles displaying ListTitle if the user want to navigate genres
-          // not through anime tags
-          // but rather through pasting the link ex: /list/tags/7
-          // currentGenre: this.state.currentGenre
-          //   ? this.state.currentGenre
-          //   : res.data.mal_url
-          //     ? res.data.mal_url.name.split('Anime')[0]
-          //     : '',
-        },
-        () => {
-          // If we have next page, recursion fetch
-          if (this.state.hasNextPage) {
-            this.setState({ fetchPage: this.state.fetchPage + 1 }, () =>
-              this.loadAnimes()
-            )
-          } else {
-            // Else set all the data
-            // Set animes by Type, default is TV
-            const animes = this.state.data.filter(
-              anime =>
-                this.state.activeType !== 'All'
-                  ? anime.format === this.state.activeType
-                  : true
-            )
-            this.setState({
-              animes,
-              loading: false,
-              pages: Math.ceil(animes.length / this.state.animesPerPage),
-              fetchPage: 1,
-            })
+      if (genre) {
+        this.setState({ currentGenre: genre })
+        this.loadAnimesByGenre()
+      } else {
+        const res = await axios.post('', {
+          query,
+          variables: {
+            season: season.toUpperCase(),
+            seasonYear: year,
+            page: this.state.fetchPage,
+          },
+        })
+        const { media, pageInfo } = res.data.data.Page
+
+        // Set initial data
+        this.setState(
+          {
+            data: this.state.data.concat(media),
+            hasNextPage: pageInfo.hasNextPage,
+            // For animes by genre we will fetch 48 animes per page
+            // So we need to reset the animes per page to 24 if we fetch by season
+            animesPerPage: 24,
+          },
+          () => {
+            // If we have next page, recursion fetch
+            if (this.state.hasNextPage) {
+              this.setState({ fetchPage: this.state.fetchPage + 1 }, () =>
+                this.loadAnimes()
+              )
+            } else {
+              // Else we finished fetching, set all the data
+              // Set animes by Type, default is TV
+              const animes = this.state.data.filter(
+                anime =>
+                  this.state.activeType !== 'All'
+                    ? anime.format === this.state.activeType
+                    : true
+              )
+              this.setState({
+                animes,
+                loading: false,
+                pages: Math.ceil(animes.length / this.state.animesPerPage),
+                // Reset fetch page
+                fetchPage: 1,
+              })
+            }
           }
-        }
-      )
+        )
+      }
     } catch (err) {
       this.setState({ err: err.res || err })
     }
   }
 
-  onClickType = e => {
-    const { value } = e.target
-    const animesByType = this.state.data.filter(
-      anime => (value !== 'All' ? anime.format === value : true)
-    )
-    this.setState({
-      activeType: value,
-      animes: animesByType,
-      pages: Math.ceil(animesByType.length / this.state.animesPerPage),
-      currentPage: 0,
+  loadAnimesByGenre = () => {
+    // Set per page to 48 and reset data
+    // Then start fetching
+    this.setState({ animesPerPage: 48, loading: true }, async () => {
+      try {
+        const res = await axios.post('', {
+          query,
+          variables: {
+            genre: this.state.currentGenre,
+            page: this.state.currentPage + 1,
+            perPage: this.state.animesPerPage,
+            format: this.state.activeType,
+          },
+        })
+
+        const { media, pageInfo } = res.data.data.Page
+        console.log('active type: ', this.state.activeType, pageInfo, media)
+
+        this.setState({
+          pages: pageInfo.lastPage,
+          animes: media,
+          loading: false,
+        })
+      } catch (err) {
+        this.setState({ err: err.res || err })
+      }
     })
   }
 
+  onClickType = e => {
+    const { value } = e.target
+
+    this.setState({ activeType: value })
+    // Handle type click base on genre anime or season anime
+    if (this.state.currentGenre) {
+      // We will fetch if user want to get genre anime
+      // else if it's season anime we can just filter from the data,
+      this.setState({ currentPage: 0 })
+      this.loadAnimesByGenre()
+    } else {
+      const animesByType = this.state.data.filter(
+        anime => (value !== 'All' ? anime.format === value : true)
+      )
+      this.setState({
+        animes: animesByType,
+        pages: Math.ceil(animesByType.length / this.state.animesPerPage),
+        currentPage: 0,
+      })
+    }
+  }
+
   handlePageClick = data => {
-    this.setState({ currentPage: data.selected })
     window.scrollTo({ top: 0, behavior: 'smooth' })
+    this.setState({ currentPage: data.selected })
+    if (this.state.currentGenre) {
+      // We will fetch if user want to get genre anime
+      // else if it's season anime we can just filter from the data,
+      this.loadAnimesByGenre()
+    }
   }
 
   render() {
@@ -245,15 +305,18 @@ export class List extends Component {
         ? Array.from('dummyobjects').map((_, i) => (
             <Loader key={i} viewWidth={viewWidth} />
           ))
-        : animes
-            .slice(
-              currentPage * animesPerPage,
-              (currentPage + 1) * animesPerPage
-            )
-            .map(anime => (
+        : this.state.currentGenre
+          ? animes.map(anime => (
               <Anime key={anime.id} {...anime} viewWidth={viewWidth} />
             ))
-
+          : animes
+              .slice(
+                currentPage * animesPerPage,
+                (currentPage + 1) * animesPerPage
+              )
+              .map(anime => (
+                <Anime key={anime.id} {...anime} viewWidth={viewWidth} />
+              ))
     return (
       <>
         <div className={styles.ListHeader}>

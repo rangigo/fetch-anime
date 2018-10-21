@@ -23,8 +23,15 @@ const Anime = ({
   airingSchedule: { nodes },
   format: type,
   externalLinks,
+  trailer,
+  startDate,
 }) => {
-  let titleFontSize, studioFontSize, tagFontSize, tagLineHeight, dateFontSize
+  let titleFontSize,
+    studioFontSize,
+    tagFontSize,
+    tagLineHeight,
+    dateFontSize,
+    nativeTitleFontSize
 
   const title = english ? english : romaji
 
@@ -51,36 +58,40 @@ const Anime = ({
           if (i !== genres.length - 1)
             return (
               <li key={genre} className={styles.PluralGenres}>
-                <Link
-                  to={{
-                    pathname: `/list/genres/${genre}`,
-                    state: { name: genre },
-                  }}
-                >
-                  {genre}
-                </Link>
+                <Link to={`/list/genres/${genre}`}>{genre}</Link>
               </li>
             )
           else
             return (
               <li key={genre}>
-                <Link
-                  to={{
-                    pathname: `/list/genres/${genre.mal_id}`,
-                    state: { name: genre },
-                  }}
-                >
-                  {genre}
-                </Link>
+                <Link to={`/list/genres/${genre}`}>{genre}</Link>
               </li>
             )
         })
       : '?'
 
+  const trailerLink = trailer
+    ? {
+        url:
+          trailer.site === 'youtube'
+            ? `https://www.youtube.com/watch?v=${trailer.id}`
+            : trailer.site === 'dailymotion'
+              ? `https://www.dailymotion.com/video/${trailer.id}`
+              : '',
+        site: trailer.site.replace(/^\w/, c => c.toUpperCase()),
+      }
+    : ''
+
   // Handle responsive font-size based on viewwidth
 
   titleFontSize =
     title.length > 50 ? '.74vw' : title.length > 40 ? '.9vw' : '18px'
+
+  nativeTitleFontSize = native
+    ? native.length > 35
+      ? '.62vw'
+      : '.9vw'
+    : '.9vw'
 
   tagFontSize =
     genres.length >= 7
@@ -95,12 +106,12 @@ const Anime = ({
 
   studioFontSize = studios.length >= 3 ? '.6vw' : '.88vw'
 
-  dateFontSize = '.82vw'
+  dateFontSize = '.81vw'
 
   if (viewWidth < 1600) {
     titleFontSize =
       title.length > 50 ? '.98vw' : title.length > 40 ? '1.3vw' : '1.37vw'
-
+    nativeTitleFontSize = '1.1vw'
     tagFontSize =
       genres.length >= 8
         ? '.7vw'
@@ -116,6 +127,9 @@ const Anime = ({
 
   if (viewWidth < 1200) {
     titleFontSize = title.length > 50 ? '1.45vw' : '1.8vw'
+
+    nativeTitleFontSize = '1.35vw'
+
     tagFontSize =
       genres.length >= 8
         ? '1.05vw'
@@ -129,6 +143,9 @@ const Anime = ({
   }
 
   if (viewWidth < 930) {
+    titleFontSize =
+      title.length > 50 ? '1.65vw' : title.length > 30 ? '1.9vw' : '2.3vw'
+    nativeTitleFontSize = '1.65vw'
     tagFontSize = genres.length >= 6 ? '1.1vw' : '1.4vw'
     if (studios.length >= 3) studioFontSize = '1.2vw'
   }
@@ -145,6 +162,12 @@ const Anime = ({
         >
           {title}
         </a>
+        <h4
+          className={styles.NativeTitle}
+          style={{ fontSize: nativeTitleFontSize }}
+        >
+          {native ? native : english ? english : romaji}
+        </h4>
         <SimpleBar>
           <ol
             className={styles.AnimeGenres}
@@ -180,7 +203,13 @@ const Anime = ({
                     timeZone: 'Europe/Helsinki',
                   }
                 )
-              : '?'}
+              : startDate
+                ? formatToTimeZone(
+                    new Date(startDate.year, startDate.month, startDate.day),
+                    'Do MMM, YYYY',
+                    { timeZone: 'Europe/Helsinki' }
+                  )
+                : '?'}
           </div>
           <div className={styles.AnimeMetaData}>
             <div className={styles.AnimeSource}>
@@ -209,9 +238,15 @@ const Anime = ({
           </div>
         </div>
         <div className={styles.ExternalLinks}>
-          {externalLinks.length > 0
-            ? externalLinks.map(link => <LinkIcon key={link.url} {...link} />)
-            : <p>?</p>}
+          {externalLinks.length > 0 ? (
+            [trailerLink]
+              .concat(externalLinks)
+              .map(
+                link => (link ? <LinkIcon key={link.url} {...link} /> : null)
+              )
+          ) : (
+            <p>?</p>
+          )}
         </div>
       </div>
     </article>
