@@ -14,11 +14,13 @@ const Anime = ({
   studios: { nodes: studios },
   source,
   episodes,
+  duration,
   description,
   idMal,
   viewWidth,
-  nextAiringEpisode: { timeUntilAiring, episode },
+  nextAiringEpisode,
   airingSchedule: { nodes },
+  format: type,
 }) => {
   let titleFontSize, studioFontSize, tagFontSize, tagLineHeight, dateFontSize
 
@@ -37,9 +39,9 @@ const Anime = ({
         })
       : '?'
 
-  const splitDescription = description.split(
-    /(\(Source: .+\))|(\[Written by .+\])/g
-  )
+  const splitDescription = description
+    ? description.split(/(\(Source: .+\))|(\[Written by .+\])/g)
+    : ''
 
   const renderGenres =
     genres.length > 0
@@ -148,9 +150,12 @@ const Anime = ({
           {renderGenres}
         </ol>
         <div className={styles.PosterContainer}>
-          <div className={styles.Broadcast}>
-            <CountdownTime time={timeUntilAiring} ep={episode} />
-          </div>
+          <CountdownTime
+            time={nextAiringEpisode ? nextAiringEpisode.timeUntilAiring : null}
+            ep={nextAiringEpisode ? nextAiringEpisode.episode : null}
+            type={type}
+          />
+
           <img src={coverImage.large} alt={title} />
         </div>
         <div className={styles.AnimeInfo}>
@@ -161,24 +166,39 @@ const Anime = ({
             {renderStudios}
           </ul>
           <div className={styles.AnimeDate} style={{ fontSize: dateFontSize }}>
-            {formatToTimeZone(
-              nodes[0].airingAt * 1000,
-              'D MMM, YYYY [at] HH:mm A z',
-              {
-                timeZone: 'Europe/Helsinki',
-              }
-            )}
+            {nodes.length > 0
+              ? formatToTimeZone(
+                  nodes[0].airingAt * 1000,
+                  'D MMM, YYYY [at] HH:mm A z',
+                  {
+                    timeZone: 'Europe/Helsinki',
+                  }
+                )
+              : '?'}
           </div>
           <div className={styles.AnimeMetaData}>
-            <div className={styles.AnimeSource}>{source}</div>
+            <div className={styles.AnimeSource}>
+              {source
+                ? source
+                    .toLowerCase()
+                    .split('_')
+                    .join(' ')
+                : '?'}
+            </div>
             <div className={styles.AnimeEpisodes}>
               {episodes ? episodes : '?'} eps
+              {' × '}
+              {duration ? duration : '?'} min
             </div>
           </div>
           <div className={styles.AnimeDescription}>
             <SimpleBar style={{ height: '100%', border: 'none' }}>
-              <p dangerouslySetInnerHTML={{ __html: splitDescription[0] }} />
-              <p>{splitDescription[1] || splitDescription[2]}</p>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: splitDescription[0] || 'No description found.',
+                }}
+              />
+              <p>{splitDescription[1] || splitDescription[2] || ''}</p>
             </SimpleBar>
           </div>
         </div>

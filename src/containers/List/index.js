@@ -38,8 +38,9 @@ query ($season: MediaSeason, $seasonYear: Int, $page: Int, $perPage:Int) {
       lastPage
       hasNextPage
     }
-    media(season: $season, seasonYear: $seasonYear, type: ANIME, sort: POPULARITY_DESC) {
+    media(season: $season, seasonYear: $seasonYear, type: ANIME, sort: POPULARITY_DESC, , isAdult: false) {
       # siteUrl
+      id
       idMal
       genres
       episodes
@@ -136,8 +137,8 @@ export class List extends Component {
         currentGenre: this.props.location.state
           ? this.props.location.state.name
           : '',
-        currentPage: 0,
-        pages: 0,
+        // currentPage: 0,
+        // pages: 0,
       })
 
       // Make API calls base on parameters
@@ -152,8 +153,7 @@ export class List extends Component {
             },
           })
       const data = res.data.data.Page
-      console.log(data)
-
+      
       // Set initial data
       this.setState(
         {
@@ -177,23 +177,17 @@ export class List extends Component {
           } else {
             // Else set all the data
             // Set animes by Type, default is TV
-            this.setState({
-              animes: this.state.data.filter(
-                anime =>
-                  this.state.activeType !== 'All'
-                    ? anime.format === this.state.activeType
-                    : true
-              ),
-            })
-
-            // Set Pages value for pagination and Loading to false
-            this.setState(
-              {
-                loading: false,
-                pages: this.state.animes.length / this.state.animesPerPage,
-              },
-              () => console.log(this.state)
+            const animes = this.state.data.filter(
+              anime =>
+                this.state.activeType !== 'All'
+                  ? anime.format === this.state.activeType
+                  : true
             )
+            this.setState({
+              animes,
+              loading: false,
+              pages: Math.ceil(animes.length / this.state.animesPerPage),
+            })
           }
         }
       )
@@ -210,7 +204,7 @@ export class List extends Component {
     this.setState({
       activeType: value,
       animes: animesByType,
-      pages: animesByType.length / this.state.animesPerPage,
+      pages: Math.ceil(animesByType.length / this.state.animesPerPage),
       currentPage: 0,
     })
   }
@@ -238,7 +232,7 @@ export class List extends Component {
         params: { season, year },
       },
     } = this.props
-
+    console.log(animes)
     const renderAnimes = err
       ? 'Something is wrong please reload the page!'
       : loading
@@ -251,7 +245,7 @@ export class List extends Component {
               (currentPage + 1) * animesPerPage
             )
             .map(anime => (
-              <Anime key={anime.idMal} {...anime} viewWidth={viewWidth} />
+              <Anime key={anime.id} {...anime} viewWidth={viewWidth} />
             ))
 
     return (
