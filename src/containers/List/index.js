@@ -234,7 +234,7 @@ export class List extends Component {
             genre: this.state.currentGenre,
             page: this.state.currentPage,
             perPage: this.state.animesPerPage,
-            format: this.state.activeType,
+            ...(this.state.activeType !== 'All' ? { format: this.state.activeType } : {}),
           },
         })
 
