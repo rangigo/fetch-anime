@@ -2,38 +2,44 @@ import React, { Component } from 'react'
 
 import { formatToTimeZone } from 'date-fns-timezone'
 
+import styles from './CountdownTime.module.scss'
+
 export class CountdownTime extends Component {
   state = {
-    countdownTime: this.props.time * 1000,
+    countdownTime: this.props.time ? this.props.time * 1000 : null,
   }
 
   componentDidMount() {
-    this.setCountdownTime()
-  }
-
-  setCountdownTime = () => {
-    if (this.state.countdownTime >= 0) {
-      setInterval(() => {
+    if (this.state.countdownTime >= 0 && this.state.countdownTime !== null) {
+      this.interval = setInterval(() => {
         this.setState({
           countdownTime: this.state.countdownTime - 1000,
         })
       }, 1000)
     } else {
-      clearInterval()
+      clearInterval(this.interval)
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
   render() {
     const { countdownTime } = this.state
     const { ep } = this.props
-    
+
     return (
-      <div>
-        EP {ep}:{' '}
-        {formatToTimeZone(countdownTime, 'D[d] HH[h] mm[m] ss[s]', {
-          timeZone: 'Europe/Helsinki',
-        })}
-      </div>
+      <>
+        {countdownTime ? (
+          <div className={styles.EpCountdown}>
+            EP {ep}:{' '}
+            {formatToTimeZone(countdownTime, 'D[d] HH[h] mm[m] ss[s]', {
+              timeZone: 'Europe/Helsinki',
+            })}
+          </div>
+        ) : null}
+      </>
     )
   }
 }

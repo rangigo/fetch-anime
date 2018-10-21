@@ -104,23 +104,8 @@
     height: 100%;
   }
 
-  .Broadcast {
-    visibility: visible;
-    opacity: 1;
-    transition: visibility 0s, opacity 0.2s linear;
-    left: 0;
-    position: absolute;
-    font-size: 0.83em;
-    color: #fff;
-    z-index: 5;
-    background: rgba(0, 0, 0, 0.65);
-    top: 0;
-    padding: 0.5em 0;
-    width: 100%;
-  }
-
   &:hover {
-    .Broadcast {
+    div {
       visibility: hidden;
       opacity: 0;
       transition: visibility 0.1s, opacity 0.5s linear;
@@ -171,6 +156,10 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+
+  .AnimeSource {
+    text-transform: capitalize;
+  }
 }
 
 .AnimeDescription {
