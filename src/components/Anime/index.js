@@ -6,6 +6,7 @@ import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
 import styles from './Anime.module.scss'
 import CountdownTime from '../../containers/CountdownTime'
+import LinkIcon from '../LinkIcon'
 
 const Anime = ({
   title: { english, romaji, native },
@@ -21,6 +22,7 @@ const Anime = ({
   nextAiringEpisode,
   airingSchedule: { nodes },
   format: type,
+  externalLinks,
 }) => {
   let titleFontSize, studioFontSize, tagFontSize, tagLineHeight, dateFontSize
 
@@ -143,12 +145,14 @@ const Anime = ({
         >
           {title}
         </a>
-        <ol
-          className={styles.AnimeGenres}
-          style={{ fontSize: tagFontSize, lineHeight: tagLineHeight }}
-        >
-          {renderGenres}
-        </ol>
+        <SimpleBar>
+          <ol
+            className={styles.AnimeGenres}
+            style={{ fontSize: tagFontSize, lineHeight: tagLineHeight }}
+          >
+            {renderGenres}
+          </ol>
+        </SimpleBar>
         <div className={styles.PosterContainer}>
           <CountdownTime
             time={nextAiringEpisode ? nextAiringEpisode.timeUntilAiring : null}
@@ -159,12 +163,14 @@ const Anime = ({
           <img src={coverImage.large} alt={title} />
         </div>
         <div className={styles.AnimeInfo}>
-          <ul
-            className={styles.AnimeStudios}
-            style={{ fontSize: studioFontSize }}
-          >
-            {renderStudios}
-          </ul>
+          <SimpleBar>
+            <ul
+              className={styles.AnimeStudios}
+              style={{ fontSize: studioFontSize }}
+            >
+              {renderStudios}
+            </ul>
+          </SimpleBar>
           <div className={styles.AnimeDate} style={{ fontSize: dateFontSize }}>
             {nodes.length > 0
               ? formatToTimeZone(
@@ -192,7 +198,7 @@ const Anime = ({
             </div>
           </div>
           <div className={styles.AnimeDescription}>
-            <SimpleBar style={{ height: '100%', border: 'none' }}>
+            <SimpleBar style={{ height: '100%' }}>
               <p
                 dangerouslySetInnerHTML={{
                   __html: splitDescription[0] || 'No description found.',
@@ -201,6 +207,11 @@ const Anime = ({
               <p>{splitDescription[1] || splitDescription[2] || ''}</p>
             </SimpleBar>
           </div>
+        </div>
+        <div className={styles.ExternalLinks}>
+          {externalLinks.length > 0
+            ? externalLinks.map(link => <LinkIcon key={link.url} {...link} />)
+            : <p>?</p>}
         </div>
       </div>
     </article>

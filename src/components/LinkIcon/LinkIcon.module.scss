@@ -1,0 +1,98 @@
+.LinkIcon {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+  background-size: 263px 390px;
+  background-repeat: no-repeat;
+  a {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.CrunchyrollIcon {
+  background: url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png');
+  background: -webkit-image-set(
+    url('https://s.livechart.me/assets/sprites-b682267b6179cf8af8e2596465dd255e7ccc8d97bb384eb3d1139d1d236cd16d.png')
+      1x,
+    url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png')
+      2x
+  );
+  background: image-set(
+    url('https://s.livechart.me/assets/sprites-b682267b6179cf8af8e2596465dd255e7ccc8d97bb384eb3d1139d1d236cd16d.png')
+      1x,
+    url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png')
+      2x
+  );
+  background-position: 0 -360px;
+  &:hover {
+    background-color: #f78c27;
+    background-position: -30px -360px;
+  }
+}
+
+.WebsiteIcon {
+  background: url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png');
+  background: -webkit-image-set(
+    url('https://s.livechart.me/assets/sprites-b682267b6179cf8af8e2596465dd255e7ccc8d97bb384eb3d1139d1d236cd16d.png')
+      1x,
+    url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png')
+      2x
+  );
+  background: image-set(
+    url('https://s.livechart.me/assets/sprites-b682267b6179cf8af8e2596465dd255e7ccc8d97bb384eb3d1139d1d236cd16d.png')
+      1x,
+    url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png')
+      2x
+  );
+  background-position: 0 -210px;
+
+  &:hover {
+    background-color: #4a85ff;
+    background-position: -30px -210px;
+  }
+}
+.TwitterIcon {
+  background: url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png');
+  background: -webkit-image-set(
+    url('https://s.livechart.me/assets/sprites-b682267b6179cf8af8e2596465dd255e7ccc8d97bb384eb3d1139d1d236cd16d.png')
+      1x,
+    url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png')
+      2x
+  );
+  background-position: 0 -150px;
+  &:hover {
+    background-color: #1da1f3;
+    background-position: -30px -150px;
+  }
+}
+
+.HidiveIcon {
+  &:hover {
+    background-color: #1da1f3;
+  }
+}
+
+.AnimelabIcon {
+  &:hover {
+    background-color: white;
+  }
+}
+
+.FunimationIcon {
+  &:hover {
+    background-color: white;
+  }
+}
+
+.TrailerIcon {
+  background: url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png');
+}

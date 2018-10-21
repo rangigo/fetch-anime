@@ -51,10 +51,10 @@ query ($season: MediaSeason, $seasonYear: Int, $page: Int, $perPage:Int) {
           name
         }
       }
-      # externalLinks {
-      #   url
-      #   site
-      # }
+      externalLinks {
+        url
+        site
+      }
       title {
         english
         romaji
@@ -110,6 +110,9 @@ export class List extends Component {
       this.props.match.params.year !== prevProps.match.params.year ||
       this.props.match.params.tag !== prevProps.match.params.tag
     ) {
+      // Clear the data if props changed
+      this.setState({ data: [] })
+      // Load new data
       this.loadAnimes()
     }
   }
@@ -130,6 +133,8 @@ export class List extends Component {
       },
     } = this.props
 
+    console.log(season, year, genre)
+
     try {
       this.setState({
         loading: true,
@@ -137,8 +142,8 @@ export class List extends Component {
         currentGenre: this.props.location.state
           ? this.props.location.state.name
           : '',
-        // currentPage: 0,
-        // pages: 0,
+        currentPage: 0,
+        pages: 0,
       })
 
       // Make API calls base on parameters
@@ -153,7 +158,7 @@ export class List extends Component {
             },
           })
       const data = res.data.data.Page
-      
+      console.log(data)
       // Set initial data
       this.setState(
         {
@@ -187,12 +192,13 @@ export class List extends Component {
               animes,
               loading: false,
               pages: Math.ceil(animes.length / this.state.animesPerPage),
+              fetchPage: 1,
             })
           }
         }
       )
     } catch (err) {
-      this.setState({ err: err.res.data || err })
+      this.setState({ err: err.res || err })
     }
   }
 
@@ -232,7 +238,7 @@ export class List extends Component {
         params: { season, year },
       },
     } = this.props
-    console.log(animes)
+
     const renderAnimes = err
       ? 'Something is wrong please reload the page!'
       : loading
@@ -281,6 +287,7 @@ export class List extends Component {
             onPageChange={this.handlePageClick}
             containerClassName={styles.Pagination}
             activeClassName={styles.PageActive}
+            disabledClassName={styles.PageDisabled}
           />
         </div>
       </>

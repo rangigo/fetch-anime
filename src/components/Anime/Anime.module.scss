@@ -72,7 +72,6 @@
   line-height: 1.6;
   display: flex;
   justify-content: center;
-  overflow-x: hidden;
   color: $dark-text-color;
 
   li {
@@ -91,7 +90,8 @@
 }
 
 .PosterContainer {
-  border-right: 1px solid rgba(118, 118, 118, 0.1);
+  @include borderBottom();
+  border-right: 1px solid $border-color;
   float: left;
   width: 136px;
   position: relative;
@@ -119,6 +119,7 @@
 }
 
 .AnimeInfo {
+  @include borderBottom();
   display: flex;
   flex-flow: column;
   height: 194.28571429px;
@@ -131,7 +132,6 @@
 
 .AnimeStudios {
   @include animeInfoMixIn();
-
   margin: 0;
   list-style: none;
   font-size: 1.15em;
@@ -178,6 +178,23 @@
     &:last-of-type {
       padding-bottom: 0.5rem;
     }
+  }
+}
+
+.ExternalLinks {
+  padding: 4px 0;
+  display: flex;
+  justify-content: center;
+
+  a {
+    text-decoration: none;
+    color: $text-color;
+  }
+  p {
+    margin: 0;
+    height: 30px;
+    display: flex;
+    align-items: center;
   }
 }
 

@@ -33,7 +33,7 @@ export class CountdownTime extends Component {
       <>
         {countdownTime ? (
           <div className={styles.EpCountdown}>
-            {type !== 'MOVIE' ? `EP ${ep}: ` : `Release: `}
+            {type === 'TV' ? `EP ${ep}: ` : `Release: `}
             {formatToTimeZone(countdownTime, 'D[d] HH[h] mm[m] ss[s]', {
               timeZone: 'Europe/Helsinki',
             })}
