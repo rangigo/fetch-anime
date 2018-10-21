@@ -58,13 +58,13 @@ const Anime = ({
           if (i !== genres.length - 1)
             return (
               <li key={genre} className={styles.PluralGenres}>
-                <Link to={`/list/genres/${genre}`}>{genre}</Link>
+                <Link to={`/list/genres/${genre}/TV/1`}>{genre}</Link>
               </li>
             )
           else
             return (
               <li key={genre}>
-                <Link to={`/list/genres/${genre}`}>{genre}</Link>
+                <Link to={`/list/genres/${genre}/TV/1`}>{genre}</Link>
               </li>
             )
         })
