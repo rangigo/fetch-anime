@@ -81,17 +81,18 @@
   }
 }
 
-.AnimelabIcon {
+.NormalIcon { 
   &:hover {
     background-color: white;
   }
 }
 
-.FunimationIcon {
+.HuluIcon {
   &:hover {
-    background-color: white;
+    background-color: #79B732;
   }
 }
+
 
 .TrailerIcon {
   background: url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png');

@@ -3,6 +3,11 @@ import React from 'react'
 import funimation from '../../assets/funimation.png'
 import Animelab from '../../assets/Animelab.svg'
 import Hidive from '../../assets/hidive.jpg'
+import Youtube from '../../assets/Youtube.svg'
+import Wakanim from '../../assets/wakanim.jpg'
+import Dailymotion from '../../assets/dailymotion.svg'
+import Netflix from '../../assets/netflix.svg'
+import Hulu from '../../assets/hulu.png'
 
 import styles from './LinkIcon.module.scss'
 
@@ -30,12 +35,56 @@ const LinkIcon = ({ url, site }) => {
       )
       break
     case 'Animelab':
-      iconClassName = iconClassName.concat(styles.AnimelabIcon).join(' ')
+      iconClassName = iconClassName.concat(styles.NormalIcon).join(' ')
       icon = <img src={Animelab} height="18px" width="18px" alt="icon" />
       break
     case 'Funimation':
-      iconClassName = iconClassName.concat(styles.FunimationIcon).join(' ')
+      iconClassName = iconClassName.concat(styles.NormalIcon).join(' ')
       icon = <img src={funimation} height="18px" width="18px" alt="icon" />
+      break
+    case 'Youtube':
+      iconClassName = iconClassName.concat(styles.NormalIcon).join(' ')
+      icon = <img src={Youtube} height="18px" width="18px" alt="icons" />
+      break
+    case 'Dailymotion':
+      iconClassName = iconClassName.concat(styles.NormalIcon).join(' ')
+      icon = <img src={Dailymotion} height="18px" width="18px" alt="icons" />
+      break
+    case 'Wakanim':
+      iconClassName = iconClassName.concat(styles.NormalIcon).join(' ')
+      icon = (
+        <img
+          src={Wakanim}
+          height="18px"
+          width="18px"
+          alt="icons"
+          style={{ borderRadius: '50%' }}
+        />
+      )
+      break
+    case 'Netflix':
+      iconClassName = iconClassName.concat(styles.NormalIcon).join(' ')
+      icon = (
+        <img
+          src={Netflix}
+          height="18px"
+          width="18px"
+          alt="icons"
+          style={{ borderRadius: '50%' }}
+        />
+      )
+      break
+    case 'Hulu':
+      iconClassName = iconClassName.concat(styles.HuluIcon).join(' ')
+      icon = (
+        <img
+          src={Hulu}
+          height="18px"
+          width="18px"
+          alt="icons"
+          style={{ borderRadius: '5px' }}
+        />
+      )
       break
     default:
       iconClassName = iconClassName.concat(styles.WebsiteIcon).join(' ')
