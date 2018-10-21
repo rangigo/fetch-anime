@@ -43,6 +43,7 @@ query ($season: MediaSeason, $seasonYear: Int, $page: Int, $perPage:Int) {
       idMal
       genres
       episodes
+      duration
       source
     	studios(isMain: true) {
         nodes {
@@ -82,12 +83,14 @@ query ($season: MediaSeason, $seasonYear: Int, $page: Int, $perPage:Int) {
 export class List extends Component {
   state = {
     data: [],
+    hasNextPage: true,
+    fetchPage: 1,
     animes: [],
     loading: false,
     activeType: 'TV',
     pages: 0,
     currentPage: 0,
-    animesPerPage: 12,
+    animesPerPage: 24,
     viewWidth: window.innerWidth,
     err: null,
     currentGenre: '',
@@ -119,6 +122,7 @@ export class List extends Component {
   loadAnimes = async () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
 
+    // Get parameters from route
     const {
       match: {
         params: { season, year, genre },
@@ -139,44 +143,60 @@ export class List extends Component {
       // Make API calls base on parameters
       const res = genre
         ? await axios.post({})
-        : await axios.post('',{
+        : await axios.post('', {
             query,
             variables: {
               season: season.toUpperCase(),
               seasonYear: year,
-              page: this.state.currentPage + 1,
-              perPage: this.state.animesPerPage,
+              page: this.state.fetchPage,
             },
           })
-          console.log(res.data.data.Page.media[0])
+      const data = res.data.data.Page
+      console.log(data)
+
       // Set initial data
-      this.setState({
-        data: res.data.data.Page.media,
-        // This handles displaying ListTitle if the user want to navigate genres
-        // not through anime tags
-        // but rather through pasting the link ex: /list/tags/7
-        currentGenre: this.state.currentGenre
-          ? this.state.currentGenre
-          : res.data.mal_url
-            ? res.data.mal_url.name.split('Anime')[0]
-            : '',
-      })
+      this.setState(
+        {
+          data: this.state.data.concat(data.media),
+          hasNextPage: data.pageInfo.hasNextPage,
+          // This handles displaying ListTitle if the user want to navigate genres
+          // not through anime tags
+          // but rather through pasting the link ex: /list/tags/7
+          // currentGenre: this.state.currentGenre
+          //   ? this.state.currentGenre
+          //   : res.data.mal_url
+          //     ? res.data.mal_url.name.split('Anime')[0]
+          //     : '',
+        },
+        () => {
+          // If we have next page, recursion fetch
+          if (this.state.hasNextPage) {
+            this.setState({ fetchPage: this.state.fetchPage + 1 }, () =>
+              this.loadAnimes()
+            )
+          } else {
+            // Else set all the data
+            // Set animes by Type, default is TV
+            this.setState({
+              animes: this.state.data.filter(
+                anime =>
+                  this.state.activeType !== 'All'
+                    ? anime.format === this.state.activeType
+                    : true
+              ),
+            })
 
-      // Set animes by Type, default is TV
-      this.setState({
-        animes: this.state.data.filter(
-          anime =>
-            this.state.activeType !== 'All'
-              ? anime.format === this.state.activeType
-              : true
-        ),
-      })
-
-      // Set Pages value for pagination and Loading to false
-      this.setState({
-        loading: false,
-        pages: this.state.animes.length / this.state.animesPerPage,
-      })
+            // Set Pages value for pagination and Loading to false
+            this.setState(
+              {
+                loading: false,
+                pages: this.state.animes.length / this.state.animesPerPage,
+              },
+              () => console.log(this.state)
+            )
+          }
+        }
+      )
     } catch (err) {
       this.setState({ err: err.res.data || err })
     }
