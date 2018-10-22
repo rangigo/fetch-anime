@@ -3,103 +3,13 @@ import ReactPaginate from 'react-paginate'
 import axios from '../../hoc/axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+import { query, listTypes } from '../../helpers/globalVars'
+
 import Anime from '../../components/Anime'
 import Loader from '../../components/Anime/Loader'
 import styles from './List.module.scss'
 import ListTitle from '../../components/ListTitle'
 import ListType from '../../components/ListType'
-
-const ListTypes = [
-  {
-    value: 'TV',
-    label: 'Television',
-  },
-  {
-    value: 'MOVIE',
-    label: 'Movies',
-  },
-  {
-    value: 'TV_SHORT',
-    label: 'TV Short',
-  },
-  {
-    value: 'ONA',
-    label: 'ONA',
-  },
-  {
-    value: 'OVA',
-    label: 'OVA',
-  },
-  {
-    value: 'SPECIAL',
-    label: 'Special',
-  },
-  {
-    value: 'All',
-    label: 'All',
-  },
-]
-
-const query = `
-query ($season: MediaSeason, $seasonYear: Int, $page: Int, $perPage:Int, $genre: String, $format:MediaFormat) {
-  Page(page: $page, perPage:$perPage) {
-    pageInfo {
-      total
-      perPage
-      currentPage
-      lastPage
-      hasNextPage
-    }
-    media(season: $season, seasonYear: $seasonYear, type: ANIME, sort: POPULARITY_DESC, , isAdult: false, genre: $genre, format: $format) {
-      startDate {
-        year
-        month
-        day
-      }
-      id
-      idMal
-      trailer {
-        id
-        site
-      }
-      genres
-      episodes
-      duration
-      source
-    	studios(isMain: true) {
-        nodes {
-          name
-        }
-      }
-      externalLinks {
-        url
-        site
-      }
-      title {
-        english
-        romaji
-        native
-      }
-      nextAiringEpisode {
-        timeUntilAiring
-        episode
-      }
-      description
-      coverImage {
-        extraLarge
-        large
-      }
-      format
-      airingSchedule(perPage: 1, page: 1) {
-        nodes {
-          airingAt
-          episode
-        }
-      }
-    }
-  }
-}
-`
 
 export class List extends Component {
   state = {
@@ -128,7 +38,8 @@ export class List extends Component {
     if (
       this.props.match.params.season !== prevProps.match.params.season ||
       this.props.match.params.year !== prevProps.match.params.year ||
-      this.props.match.params.genre !== prevProps.match.params.genre
+      this.props.match.params.genre !== prevProps.match.params.genre ||
+      this.props.match.params.type !== prevProps.match.params.type
     ) {
       // Clear the data if props changed
       this.setState({ data: [], animes: [] })
@@ -234,7 +145,9 @@ export class List extends Component {
             genre: this.state.currentGenre,
             page: this.state.currentPage,
             perPage: this.state.animesPerPage,
-            ...(this.state.activeType !== 'All' ? { format: this.state.activeType } : {}),
+            ...(this.state.activeType !== 'All'
+              ? { format: this.state.activeType }
+              : {}),
           },
         })
 
@@ -255,15 +168,16 @@ export class List extends Component {
   onClickType = e => {
     const { value } = e.target
 
-    this.setState({ activeType: value })
+    this.setState({
+      activeType: value,
+      currentPage: 1,
+    })
     const { currentGenre } = this.state
     // Handle type click base on genre anime or season anime
     if (currentGenre) {
       // We will fetch if user want to get genre anime
       // else if it's season anime we can just filter from the data,
-      this.setState({ currentPage: 1 })
       this.props.history.push(`/list/genres/${currentGenre}/${value}/1`)
-      this.loadAnimesByGenre()
     } else {
       const animesByType = this.state.data.filter(
         anime => (value !== 'All' ? anime.format === value : true)
@@ -271,7 +185,6 @@ export class List extends Component {
       this.setState({
         animes: animesByType,
         pages: Math.ceil(animesByType.length / this.state.animesPerPage),
-        currentPage: 1,
       })
     }
   }
@@ -282,7 +195,6 @@ export class List extends Component {
     this.setState({ currentPage: data.selected + 1 })
     if (this.state.currentGenre) {
       // We will fetch if user want to get genre anime
-      // else if it's season anime we can just filter from the data,
       this.props.history.push(
         `/list/genres/${currentGenre}/${activeType}/${data.selected + 1}`
       )
@@ -332,7 +244,7 @@ export class List extends Component {
         <div className={styles.ListHeader}>
           <ListTitle season={season} year={year} genre={currentGenre} />
           <nav>
-            {ListTypes.map(type => (
+            {listTypes.map(type => (
               <ListType
                 activeType={activeType}
                 onClickType={this.onClickType}
@@ -343,6 +255,8 @@ export class List extends Component {
             ))}
           </nav>
         </div>
+
+        <div className={styles.ListOptions} />
 
         <div className={styles.ListContainer}>
           {renderAnimes.length === 0 ? 'No animes found.' : renderAnimes}
