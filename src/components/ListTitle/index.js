@@ -3,7 +3,9 @@ import Skeleton from 'react-skeleton-loader'
 
 const ListTitle = ({ season, year, genre }) => {
   const title = genre ? (
-    `${genre} Anime`
+    <span>
+      <span style={{ color: '#46b5e9' }}>{genre} </span> Anime
+    </span>
   ) : season ? (
     `${season} ${year}-${+year + 1} Anime`
   ) : (

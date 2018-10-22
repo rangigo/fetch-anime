@@ -13,9 +13,11 @@ const Loader = ({ viewWidth }) => {
       ? '16vw'
       : viewWidth < 1200
         ? '17vw'
-        : viewWidth < 1600
-          ? '11vw'
-          : '10vw'
+        : viewWidth < 1550
+          ? '9vw'
+          : viewWidth < 1600
+            ? '11vw'
+            : '10vw'
 
   return (
     <article className={styles.AnimeContainer}>
@@ -32,7 +34,7 @@ const Loader = ({ viewWidth }) => {
         >
           <CustomSkeleton width={width} />
         </div>
-        <div className={styles.AnimeInfo}>
+        <div className={styles.AnimeInfo} style={{ border: 'none' }}>
           <ul className={styles.AnimeStudios} style={{ border: 'none' }}>
             <CustomSkeleton width={width} />
           </ul>
@@ -43,11 +45,17 @@ const Loader = ({ viewWidth }) => {
             <CustomSkeleton width={width} />
           </div>
           <div
-            className={styles.AnimeSynopsis}
+            className={styles.AnimeDescription}
             style={{ overflow: 'hidden', textAlign: 'center' }}
           >
             <CustomSkeleton width={width} />
           </div>
+        </div>
+        <div
+          className={styles.ExternalLinks}
+          style={{ height: '30px', width: '100%' }}
+        >
+          <CustomSkeleton width={width} />
         </div>
       </div>
     </article>

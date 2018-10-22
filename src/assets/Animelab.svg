@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="14pt"
+   height="14pt"
+   viewBox="0 0 14 14"
+   preserveAspectRatio="xMidYMid meet"
+   id="svg3800"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="Animelab.svg">
+  <defs
+     id="defs3810" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="702"
+     id="namedview3808"
+     showgrid="true"
+     inkscape:zoom="25.758928"
+     inkscape:cx="15.368475"
+     inkscape:cy="8.3460699"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg3800">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3812" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3802">
+Created by potrace 1.10, written by Peter Selinger 2001-2011
+<rdf:RDF>
+  <cc:Work
+     rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type
+       rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+    <dc:title></dc:title>
+  </cc:Work>
+</rdf:RDF>
+</metadata>
+  <g
+     transform="matrix(0.00356655,0,0,-0.00356655,0.22522302,13.989301)"
+     id="g3804"
+     style="fill:#3e2d7d;stroke:none">
+    <path
+       d="m 1100,3430 -850,-487 0,-985 0,-985 855,-488 856,-488 854,487 855,487 0,987 0,988 -850,486 c -467,267 -854,486 -860,486 -5,0 -392,-220 -860,-488 z M 2211,2195 c 131,-201 308,-472 394,-603 85,-131 153,-240 150,-242 -3,-2 -182,63 -399,143 l -395,147 -400,-148 c -220,-81 -394,-136 -386,-122 72,122 778,1190 786,1190 7,0 119,-164 250,-365 z"
+       id="path3806"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

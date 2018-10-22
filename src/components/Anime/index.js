@@ -1,100 +1,97 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import moment from 'moment-timezone'
-import PerfectScrollbar from 'react-perfect-scrollbar'
+import { formatToTimeZone } from 'date-fns-timezone'
+import SimpleBar from 'simplebar-react'
 
-import 'react-perfect-scrollbar/dist/css/styles.css'
+import 'simplebar/dist/simplebar.min.css'
 import styles from './Anime.module.scss'
-
-const CURRENT_SEASON_START = '2018-10-01'
-const CURRENT_SEASON_END = '2018-12-31'
+import CountdownTime from '../../containers/CountdownTime'
+import LinkIcon from '../LinkIcon'
 
 const Anime = ({
-  title,
+  title: { english, romaji, native },
   genres,
-  image_url,
-  producers,
-  airing_start,
+  coverImage,
+  studios: { nodes: studios },
   source,
   episodes,
-  synopsis,
-  type,
-  url,
+  duration,
+  description,
+  idMal,
   viewWidth,
-  continuing,
+  nextAiringEpisode,
+  airingSchedule: { nodes },
+  format: type,
+  externalLinks,
+  trailer,
+  startDate,
 }) => {
-  let titleFontSize, studioFontSize, tagFontSize, tagLineHeight, dateFontSize
+  let titleFontSize,
+    studioFontSize,
+    tagFontSize,
+    tagLineHeight,
+    dateFontSize,
+    nativeTitleFontSize
+
+  const title = english ? english : romaji
 
   const renderStudios =
-    producers.length > 0
-      ? producers.map((producer, i) => {
-          if (i !== producers.length - 1) {
+    studios.length > 0
+      ? studios.map((studio, i) => {
+          if (i !== studios.length - 1) {
             return (
-              <li key={producer.mal_id} className={styles.PluralStudios}>
-                {producer.name}
+              <li key={studio.name} className={styles.PluralStudios}>
+                {studio.name}
               </li>
             )
-          } else return <li key={producer.mal_id}>{producer.name}</li>
+          } else return <li key={studio.name}>{studio.name}</li>
         })
       : '?'
 
-  const splitSynopsis = synopsis.split(/(\(Source: .+\))|(\[Written by .+\])/g)
+  const splitDescription = description
+    ? description.split(/(\(Source: .+\))|(\[Written by .+\])/g)
+    : ''
 
-  const renderTags =
+  const renderGenres =
     genres.length > 0
       ? genres.map((genre, i) => {
           if (i !== genres.length - 1)
             return (
-              <li key={genre.mal_id} className={styles.PluralTags}>
-                <Link
-                  to={{
-                    pathname: `/list/tags/${genre.mal_id}`,
-                    state: { name: genre.name },
-                  }}
-                >
-                  {genre.name}
-                </Link>
+              <li key={genre} className={styles.PluralGenres}>
+                <Link to={`/list/genres/${genre}/TV/1`}>{genre}</Link>
               </li>
             )
           else
             return (
-              <li key={genre.mal_id}>
-                <Link
-                  to={{
-                    pathname: `/list/tags/${genre.mal_id}`,
-                    state: { name: genre.name },
-                  }}
-                >
-                  {genre.name}
-                </Link>
+              <li key={genre}>
+                <Link to={`/list/genres/${genre}/TV/1`}>{genre}</Link>
               </li>
             )
         })
       : '?'
 
-  let broadcastTime = (
-    <div className={styles.Broadcast}>
-      Broadcast: {moment(airing_start).format('dddd hh:mm A')}
-    </div>
-  )
-  if (type === 'TV') {
-    if (!continuing) {
-      if (
-        !moment(airing_start).isBetween(
-          CURRENT_SEASON_START,
-          CURRENT_SEASON_END
-        )
-      ) {
-        broadcastTime = null
+  const trailerLink = trailer
+    ? {
+        url:
+          trailer.site === 'youtube'
+            ? `https://www.youtube.com/watch?v=${trailer.id}`
+            : trailer.site === 'dailymotion'
+              ? `https://www.dailymotion.com/video/${trailer.id}`
+              : '',
+        site: trailer.site.replace(/^\w/, c => c.toUpperCase()),
       }
-    }
-  } else {
-    broadcastTime = null
-  }
+    : ''
+
   // Handle responsive font-size based on viewwidth
 
   titleFontSize =
     title.length > 50 ? '.74vw' : title.length > 40 ? '.9vw' : '18px'
+
+  nativeTitleFontSize = native
+    ? native.length > 35
+      ? '.62vw'
+      : '.9vw'
+    : '.9vw'
 
   tagFontSize =
     genres.length >= 7
@@ -103,18 +100,18 @@ const Anime = ({
         ? '.64vw'
         : genres.length >= 5
           ? '.75vw'
-          : '12.5px'
+          : '14px'
 
   tagLineHeight = genres.length >= 6 ? '1.95' : '1.6'
 
-  studioFontSize = producers.length >= 3 ? '.6vw' : '.88vw'
+  studioFontSize = studios.length >= 3 ? '.6vw' : '.88vw'
 
-  dateFontSize = '.82vw'
+  dateFontSize = '.81vw'
 
   if (viewWidth < 1600) {
     titleFontSize =
       title.length > 50 ? '.98vw' : title.length > 40 ? '1.3vw' : '1.37vw'
-
+    nativeTitleFontSize = '1.1vw'
     tagFontSize =
       genres.length >= 8
         ? '.7vw'
@@ -124,12 +121,28 @@ const Anime = ({
             ? '.9vw'
             : '1vw'
 
-    studioFontSize = producers.length >= 3 ? '.93vw' : '1.18vw'
+    studioFontSize = studios.length >= 3 ? '.93vw' : '1.18vw'
     dateFontSize = '1.18vw'
+  }
+
+  if (viewWidth < 1550) {
+    titleFontSize =
+      title.length > 50 ? '.88vw' : title.length > 40 ? '1vw' : '1.1vw'
+    dateFontSize = '.75vw'
+    studioFontSize = studios.length >= 3 ? '.7vw' : '.8vw'
+    nativeTitleFontSize = native
+      ? native.length > 50
+        ? '.8vw'
+        : '1vw'
+      : '1.1vw'
+    tagFontSize = genres.length >= 5 ? '.78vw' : '1vw'
   }
 
   if (viewWidth < 1200) {
     titleFontSize = title.length > 50 ? '1.45vw' : '1.8vw'
+
+    nativeTitleFontSize = '1.35vw'
+
     tagFontSize =
       genres.length >= 8
         ? '1.05vw'
@@ -143,8 +156,11 @@ const Anime = ({
   }
 
   if (viewWidth < 930) {
+    titleFontSize =
+      title.length > 50 ? '1.65vw' : title.length > 30 ? '1.9vw' : '2.3vw'
+    nativeTitleFontSize = '1.65vw'
     tagFontSize = genres.length >= 6 ? '1.1vw' : '1.4vw'
-    if (producers.length >= 3) studioFontSize = '1.2vw'
+    if (studios.length >= 3) studioFontSize = '1.2vw'
   }
 
   return (
@@ -153,21 +169,32 @@ const Anime = ({
         <a
           className={styles.MainTitle}
           style={{ fontSize: titleFontSize }}
-          href={url}
+          href={`https://myanimelist.net/anime/${idMal}`}
           target="_blank"
           rel="noopener noreferrer"
         >
           {title}
         </a>
+        <h4
+          className={styles.NativeTitle}
+          style={{ fontSize: nativeTitleFontSize }}
+        >
+          {native ? native : english ? english : romaji}
+        </h4>
         <ol
-          className={styles.AnimeTags}
+          className={styles.AnimeGenres}
           style={{ fontSize: tagFontSize, lineHeight: tagLineHeight }}
         >
-          {renderTags}
+          {renderGenres}
         </ol>
         <div className={styles.PosterContainer}>
-          {broadcastTime}
-          <img src={image_url} alt={title} />
+          <CountdownTime
+            time={nextAiringEpisode ? nextAiringEpisode.timeUntilAiring : null}
+            ep={nextAiringEpisode ? nextAiringEpisode.episode : null}
+            type={type}
+          />
+
+          <img src={coverImage.large} alt={title} />
         </div>
         <div className={styles.AnimeInfo}>
           <ul
@@ -177,22 +204,58 @@ const Anime = ({
             {renderStudios}
           </ul>
           <div className={styles.AnimeDate} style={{ fontSize: dateFontSize }}>
-            {moment(airing_start)
-              .tz('Europe/Helsinki')
-              .format('MMM Do YYYY, h:mm A z')}
+            {nodes.length > 0
+              ? formatToTimeZone(
+                  nodes[0].airingAt * 1000,
+                  'D MMM, YYYY [at] HH:mm A z',
+                  {
+                    timeZone: 'Europe/Helsinki',
+                  },
+                )
+              : startDate
+                ? formatToTimeZone(
+                    new Date(startDate.year, startDate.month, startDate.day),
+                    'Do MMM, YYYY',
+                    { timeZone: 'Europe/Helsinki' },
+                  )
+                : '?'}
           </div>
           <div className={styles.AnimeMetaData}>
-            <div className={styles.AnimeSource}>{source}</div>
+            <div className={styles.AnimeSource}>
+              {source
+                ? source
+                    .toLowerCase()
+                    .split('_')
+                    .join(' ')
+                : '?'}
+            </div>
             <div className={styles.AnimeEpisodes}>
               {episodes ? episodes : '?'} eps
+              {' × '}
+              {duration ? duration : '?'} min
             </div>
           </div>
-          <div className={styles.AnimeSynopsis}>
-            <PerfectScrollbar>
-              <p>{splitSynopsis[0]}</p>
-              <p>{splitSynopsis[1] || splitSynopsis[2]}</p>
-            </PerfectScrollbar>
+          <div className={styles.AnimeDescription}>
+            <SimpleBar style={{ height: '100%' }}>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: splitDescription[0] || 'No description found.',
+                }}
+              />
+              <p>{splitDescription[1] || splitDescription[2] || ''}</p>
+            </SimpleBar>
           </div>
+        </div>
+        <div className={styles.ExternalLinks}>
+          {externalLinks.length > 0 ? (
+            [trailerLink]
+              .concat(externalLinks)
+              .map(
+                link => (link ? <LinkIcon key={link.url} {...link} /> : null),
+              )
+          ) : (
+            <p>?</p>
+          )}
         </div>
       </div>
     </article>
