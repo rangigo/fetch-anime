@@ -256,7 +256,9 @@ export class List extends Component {
           </nav>
         </div>
 
-        <div className={styles.ListOptions} />
+        <div className={styles.ListOptions}>
+            caideogiday
+        </div>
 
         <div className={styles.ListContainer}>
           {renderAnimes.length === 0 ? 'No animes found.' : renderAnimes}

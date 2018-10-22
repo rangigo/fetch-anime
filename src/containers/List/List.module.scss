@@ -30,6 +30,13 @@
   }
 }
 
+.ListOptions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 0 0 20px;
+}
+
 .ListFooter {
   text-align: center;
   padding-bottom: 10px;
