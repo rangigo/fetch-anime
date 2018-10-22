@@ -52,7 +52,7 @@ const LinkIcon = ({ url, site }) => {
       icon = <img src={Youtube} height="18px" width="18px" alt="icons" />
       break
     case 'Dailymotion':
-      iconClassName = iconClassName.concat(styles.NormalIcon).join(' ')
+      iconClassName = iconClassName.concat(styles.DailymotionIcon).join(' ')
       icon = <img src={Dailymotion} height="18px" width="18px" alt="icons" />
       break
     case 'Wakanim':

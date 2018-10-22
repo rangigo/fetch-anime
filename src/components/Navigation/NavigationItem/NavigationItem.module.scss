@@ -1,0 +1,51 @@
+@import '../../../vars';
+@import '../../../mixins/rectangle-in';
+@import '../../../mixins/fade';
+
+
+.NavigationItem {
+  margin: 10px 0;
+  box-sizing: border-box;
+  display: block;
+  padding: 0 5px;
+  width: 100%;
+  position: relative;
+  @include rectangle-in();
+
+  a,
+  .DropBtn {
+    text-decoration: none;
+    width: 100%;
+    display: block;
+    color: $text-color;
+    box-sizing: border-box;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 16px 8px;
+    height: 100%;
+    text-transform: capitalize;
+  }
+
+  a {
+    @include fade();
+  }
+
+  .DropdownContent {
+    display: none;
+    position: absolute;
+    left: 0;
+    background-color: $main-color;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  &:hover {
+    .DropBtn {
+      color: white;
+    }
+
+    .DropdownContent {
+      display: block;
+    }
+  }
+}

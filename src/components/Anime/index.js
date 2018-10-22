@@ -108,7 +108,20 @@ const Anime = ({
 
   dateFontSize = '.81vw'
 
-  if (viewWidth < 1600) {
+  if (viewWidth <= 1550) {
+    titleFontSize =
+      title.length > 50 ? '.88vw' : title.length > 40 ? '1vw' : '1.1vw'
+    dateFontSize = '.75vw'
+    studioFontSize = studios.length >= 3 ? '.7vw' : '.8vw'
+    nativeTitleFontSize = native
+      ? native.length > 50
+        ? '.8vw'
+        : '1vw'
+      : '1.1vw'
+    tagFontSize = genres.length >= 5 ? '.78vw' : '1vw'
+  }
+
+  if (viewWidth <= 1472) {
     titleFontSize =
       title.length > 50 ? '.98vw' : title.length > 40 ? '1.3vw' : '1.37vw'
     nativeTitleFontSize = '1.1vw'
@@ -123,19 +136,6 @@ const Anime = ({
 
     studioFontSize = studios.length >= 3 ? '.93vw' : '1.18vw'
     dateFontSize = '1.18vw'
-  }
-
-  if (viewWidth < 1550) {
-    titleFontSize =
-      title.length > 50 ? '.88vw' : title.length > 40 ? '1vw' : '1.1vw'
-    dateFontSize = '.75vw'
-    studioFontSize = studios.length >= 3 ? '.7vw' : '.8vw'
-    nativeTitleFontSize = native
-      ? native.length > 50
-        ? '.8vw'
-        : '1vw'
-      : '1.1vw'
-    tagFontSize = genres.length >= 5 ? '.78vw' : '1vw'
   }
 
   if (viewWidth < 1200) {
@@ -210,13 +210,13 @@ const Anime = ({
                   'D MMM, YYYY [at] HH:mm A z',
                   {
                     timeZone: 'Europe/Helsinki',
-                  },
+                  }
                 )
               : startDate
                 ? formatToTimeZone(
                     new Date(startDate.year, startDate.month, startDate.day),
                     'Do MMM, YYYY',
-                    { timeZone: 'Europe/Helsinki' },
+                    { timeZone: 'Europe/Helsinki' }
                   )
                 : '?'}
           </div>
@@ -251,7 +251,7 @@ const Anime = ({
             [trailerLink]
               .concat(externalLinks)
               .map(
-                link => (link ? <LinkIcon key={link.url} {...link} /> : null),
+                link => (link ? <LinkIcon key={link.url} {...link} /> : null)
               )
           ) : (
             <p>?</p>

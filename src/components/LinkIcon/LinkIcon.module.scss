@@ -93,7 +93,8 @@
   }
 }
 
-
-.TrailerIcon {
-  background: url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png');
+.DailymotionIcon {
+  &:hover {
+    background-color: white;
+  }
 }
