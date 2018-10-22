@@ -13,9 +13,11 @@ const Loader = ({ viewWidth }) => {
       ? '16vw'
       : viewWidth < 1200
         ? '17vw'
-        : viewWidth < 1600
-          ? '11vw'
-          : '10vw'
+        : viewWidth < 1550
+          ? '9vw'
+          : viewWidth < 1600
+            ? '11vw'
+            : '10vw'
 
   return (
     <article className={styles.AnimeContainer}>

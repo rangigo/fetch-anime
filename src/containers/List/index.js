@@ -19,20 +19,20 @@ const ListTypes = [
     label: 'Movies',
   },
   {
-    value: 'OVA',
-    label: 'OVA',
-  },
-  {
-    value: 'SPECIAL',
-    label: 'Special',
+    value: 'TV_SHORT',
+    label: 'TV Short',
   },
   {
     value: 'ONA',
     label: 'ONA',
   },
   {
-    value: 'TV_SHORT',
-    label: 'TV Short',
+    value: 'OVA',
+    label: 'OVA',
+  },
+  {
+    value: 'SPECIAL',
+    label: 'Special',
   },
   {
     value: 'All',

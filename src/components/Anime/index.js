@@ -100,7 +100,7 @@ const Anime = ({
         ? '.64vw'
         : genres.length >= 5
           ? '.75vw'
-          : '12.5px'
+          : '14px'
 
   tagLineHeight = genres.length >= 6 ? '1.95' : '1.6'
 
@@ -123,6 +123,19 @@ const Anime = ({
 
     studioFontSize = studios.length >= 3 ? '.93vw' : '1.18vw'
     dateFontSize = '1.18vw'
+  }
+
+  if (viewWidth < 1550) {
+    titleFontSize =
+      title.length > 50 ? '.88vw' : title.length > 40 ? '1vw' : '1.1vw'
+    dateFontSize = '.75vw'
+    studioFontSize = studios.length >= 3 ? '.7vw' : '.8vw'
+    nativeTitleFontSize = native
+      ? native.length > 50
+        ? '.8vw'
+        : '1vw'
+      : '1.1vw'
+    tagFontSize = genres.length >= 5 ? '.78vw' : '1vw'
   }
 
   if (viewWidth < 1200) {
@@ -168,14 +181,12 @@ const Anime = ({
         >
           {native ? native : english ? english : romaji}
         </h4>
-        <SimpleBar>
-          <ol
-            className={styles.AnimeGenres}
-            style={{ fontSize: tagFontSize, lineHeight: tagLineHeight }}
-          >
-            {renderGenres}
-          </ol>
-        </SimpleBar>
+        <ol
+          className={styles.AnimeGenres}
+          style={{ fontSize: tagFontSize, lineHeight: tagLineHeight }}
+        >
+          {renderGenres}
+        </ol>
         <div className={styles.PosterContainer}>
           <CountdownTime
             time={nextAiringEpisode ? nextAiringEpisode.timeUntilAiring : null}
@@ -186,14 +197,12 @@ const Anime = ({
           <img src={coverImage.large} alt={title} />
         </div>
         <div className={styles.AnimeInfo}>
-          <SimpleBar>
-            <ul
-              className={styles.AnimeStudios}
-              style={{ fontSize: studioFontSize }}
-            >
-              {renderStudios}
-            </ul>
-          </SimpleBar>
+          <ul
+            className={styles.AnimeStudios}
+            style={{ fontSize: studioFontSize }}
+          >
+            {renderStudios}
+          </ul>
           <div className={styles.AnimeDate} style={{ fontSize: dateFontSize }}>
             {nodes.length > 0
               ? formatToTimeZone(
@@ -201,13 +210,13 @@ const Anime = ({
                   'D MMM, YYYY [at] HH:mm A z',
                   {
                     timeZone: 'Europe/Helsinki',
-                  }
+                  },
                 )
               : startDate
                 ? formatToTimeZone(
                     new Date(startDate.year, startDate.month, startDate.day),
                     'Do MMM, YYYY',
-                    { timeZone: 'Europe/Helsinki' }
+                    { timeZone: 'Europe/Helsinki' },
                   )
                 : '?'}
           </div>
@@ -242,7 +251,7 @@ const Anime = ({
             [trailerLink]
               .concat(externalLinks)
               .map(
-                link => (link ? <LinkIcon key={link.url} {...link} /> : null)
+                link => (link ? <LinkIcon key={link.url} {...link} /> : null),
               )
           ) : (
             <p>?</p>

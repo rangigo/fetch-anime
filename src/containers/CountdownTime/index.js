@@ -27,13 +27,15 @@ export class CountdownTime extends Component {
 
   render() {
     const { countdownTime } = this.state
-    const { ep,type } = this.props
+    const { ep, type } = this.props
 
     return (
       <>
         {countdownTime ? (
           <div className={styles.EpCountdown}>
-            {type === 'TV' ? `EP ${ep}: ` : `Release: `}
+            {type === 'TV' || type === 'TV_SHORT' || type === 'ONA'
+              ? `EP ${ep}: `
+              : `Release: `}
             {formatToTimeZone(countdownTime, 'D[d] HH[h] mm[m] ss[s]', {
               timeZone: 'Europe/Helsinki',
             })}

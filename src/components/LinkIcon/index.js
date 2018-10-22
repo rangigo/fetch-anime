@@ -8,6 +8,7 @@ import Wakanim from '../../assets/wakanim.jpg'
 import Dailymotion from '../../assets/dailymotion.svg'
 import Netflix from '../../assets/netflix.svg'
 import Hulu from '../../assets/hulu.png'
+import Amazon from '../../assets/Amazon.svg'
 
 import styles from './LinkIcon.module.scss'
 
@@ -33,6 +34,10 @@ const LinkIcon = ({ url, site }) => {
           style={{ borderRadius: '50%' }}
         />
       )
+      break
+    case 'Amazon':
+      iconClassName = iconClassName.concat(styles.NormalIcon).join(' ')
+      icon = <img src={Amazon} height="18px" width="18px" alt="icon" />
       break
     case 'Animelab':
       iconClassName = iconClassName.concat(styles.NormalIcon).join(' ')
