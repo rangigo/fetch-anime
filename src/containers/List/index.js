@@ -257,7 +257,6 @@ export class List extends Component {
         </div>
 
         <div className={styles.ListOptions}>
-            caideogiday
         </div>
 
         <div className={styles.ListContainer}>

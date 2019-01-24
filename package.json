@@ -9,6 +9,7 @@
     "axios": "^0.18.0",
     "date-fns": "^1.29.0",
     "date-fns-timezone": "^0.1.4",
+    "gh-pages": "^2.0.1",
     "node-sass": "^4.9.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
