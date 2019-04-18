@@ -23,7 +23,7 @@ class App extends Component {
           <Switch>
             <Route path='/list/genres/:genre/:type/:page' component={List} />
             <Route path="/list/:year/:season" component={List} />
-            <Redirect to="/list/2019/winter" />
+            <Redirect to="/list/2019/spring" />
           </Switch>
         </div>
       </div>
