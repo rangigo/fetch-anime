@@ -30,8 +30,6 @@ export class List extends Component {
   componentDidMount() {
     window.addEventListener('resize', this.updateViewWidth)
     this.loadAnimes()
-    // axios.get('/anime/37349').then(res => console.log(res.data))
-    // axios.get('/anime/36999').then(res => console.log(res.data))
   }
 
   componentDidUpdate(prevProps) {
@@ -257,6 +255,10 @@ export class List extends Component {
         </div>
 
         <div className={styles.ListOptions}>
+          <div>adsfasdf</div>
+          <div className={styles.ListFilter}>
+            <input type="text" placeholder="Filter this season" />
+          </div>
         </div>
 
         <div className={styles.ListContainer}>
