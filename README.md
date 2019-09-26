@@ -1,13 +1,4 @@
-# FetchAnime
-
-<img src="https://giant.gfycat.com/HastyDrearyDodo.gif" width="600" />
-
 ## Live Demo: https://rangigo.github.io/fetch-anime
-
-## Inspiration
-I build this project as I have a strong passion for animes, and in addition the internet lacks the website to curate infos about the latest episodes of seasonal animes. Thus the idea for this web was born!
-
-
 
 ## Features
 * Get the latest animes infos
@@ -20,12 +11,6 @@ I build this project as I have a strong passion for animes, and in addition the 
 * Filter seasonal anime list 
 * Search animes by title (from the AniList database)
 * User database to add favorite animes on watch list!
-
-## Technologies used
-* React 16.5.2 ⚛️️💗 (performance gained thanks to Profiler in the React DevTool!) 
-* React Router v4.0 🔗
-* SASS/CSS Module (as of CRA v2 now supported out-of-the-box 🙌)  
-* AniList GraphQL API 👀
 
 ## Getting Started
 
