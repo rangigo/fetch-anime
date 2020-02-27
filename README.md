@@ -1,7 +1,5 @@
 # FetchAnime
 
-<img src="https://giant.gfycat.com/HastyDrearyDodo.gif" width="600" />
-
 ## Live Demo: https://rangigo.github.io/fetch-anime
 
 ## Inspiration
