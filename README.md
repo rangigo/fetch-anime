@@ -20,10 +20,9 @@ I build this project as I have a strong passion for animes, and in addition the 
 * User database to add favorite animes on watch list!
 
 ## Technologies used
-* React 16.5.2 ⚛️️💗 (performance gained thanks to Profiler in the React DevTool!) 
-* React Router v4.0 🔗
-* SASS/CSS Module (as of CRA v2 now supported out-of-the-box 🙌)  
-* AniList GraphQL API 👀
+* React
+* SASS/CSS Module 
+* AniList GraphQL API
 
 ## Getting Started
 
