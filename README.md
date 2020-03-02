@@ -22,7 +22,7 @@ Curate and tracking your favorite seasonal animes!
 ## Technologies used
 * React
 * SASS/CSS Module 
-* AniList GraphQL API
+* [AniList GraphQL API](https://anilist.gitbook.io/anilist-apiv2-docs/)
 
 ## Getting Started
 
