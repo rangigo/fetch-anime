@@ -3,7 +3,7 @@
 ## Live Demo: https://rangigo.github.io/fetch-anime
 
 ## Inspiration
-I build this project as I have a strong passion for animes, and in addition the internet lacks the website to curate infos about the latest episodes of seasonal animes. Thus the idea for this web was born!
+Curate and tracking your favorite seasonal animes!
 
 
 
