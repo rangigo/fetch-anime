@@ -21,9 +21,14 @@ class App extends Component {
         <Navigation />
         <div className={styles.Content}>
           <Switch>
-            <Route path='/list/genres/:genre/:type/:page' component={List} />
+            <Route exact path="/">
+              <Redirect to="/list/2020/spring" />
+            </Route>
+            <Route path="/list/genres/:genre/:type/:page" component={List} />
             <Route path="/list/:year/:season" component={List} />
-            <Redirect to="/list/2020/spring" />
+            <Route path="*">
+              <Redirect to="/list/2020/spring" />
+            </Route>
           </Switch>
         </div>
       </div>
