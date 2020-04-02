@@ -1,6 +1,6 @@
 # FetchAnime
 
-## Live Demo: https://rangigo.github.io/fetch-anime
+## Live Demo: https://fetch-anime.netlify.com
 
 ## Inspiration
 Curate and tracking your favorite seasonal animes!
