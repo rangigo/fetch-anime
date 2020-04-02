@@ -7,7 +7,7 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 
 const app = (
-  <BrowserRouter basename="/fetch-anime">
+  <BrowserRouter>
     <App />
   </BrowserRouter>
 )

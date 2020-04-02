@@ -90,8 +90,6 @@ export class List extends Component {
         })
         const { media, pageInfo } = res.data.data.Page
 
-        console.log(media, pageInfo)
-
         // Set initial data
         this.setState(
           {
@@ -218,7 +216,7 @@ export class List extends Component {
         params: { season, year },
       },
     } = this.props
-    console.log(animes)
+
     const renderAnimes = err
       ? 'Something is wrong please reload the page!'
       : loading
@@ -252,13 +250,6 @@ export class List extends Component {
               />
             ))}
           </nav>
-        </div>
-
-        <div className={styles.ListOptions}>
-          <div>adsfasdf</div>
-          <div className={styles.ListFilter}>
-            <input type="text" placeholder="Filter this season" />
-          </div>
         </div>
 
         <div className={styles.ListContainer}>
