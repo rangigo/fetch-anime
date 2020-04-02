@@ -1,7 +1,7 @@
 {
   "name": "fetch-anime",
   "version": "0.1.0",
-  "homepage": "http://rangigo.github.io/fetch-anime",
+  "homepage": "https://fetch-anime.netlify.com",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.6",
