@@ -5,11 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { query, listTypes } from '../../helpers/globalVars'
 
-import Anime from '../../components/Anime'
+import Anime from '../../components/Anime/Anime'
 import Loader from '../../components/Anime/Loader'
 import styles from './List.module.scss'
-import ListTitle from '../../components/ListTitle'
-import ListType from '../../components/ListType'
+import ListTitle from '../../components/ListTitle/ListTitle'
+import ListType from '../../components/ListType/ListType'
 
 export class List extends Component {
   state = {
@@ -57,10 +57,8 @@ export class List extends Component {
 
     // Get parameters from route
     const {
-      match: {
-        params: { season, year, genre, page, type },
-      },
-    } = this.props
+      params: { season, year, genre, page, type },
+    } = this.props?.match
 
     try {
       this.setState({
@@ -103,16 +101,15 @@ export class List extends Component {
             // If we have next page, recursion fetch
             if (this.state.hasNextPage) {
               this.setState({ fetchPage: this.state.fetchPage + 1 }, () =>
-                this.loadAnimes()
+                this.loadAnimes(),
               )
             } else {
               // Else we finished fetching, set all the data
               // Set animes by Type, default is TV
-              const animes = this.state.data.filter(
-                anime =>
-                  this.state.activeType !== 'All'
-                    ? anime.format === this.state.activeType
-                    : true
+              const animes = this.state.data.filter(anime =>
+                this.state.activeType !== 'All'
+                  ? anime.format === this.state.activeType
+                  : true,
               )
               this.setState({
                 animes,
@@ -122,7 +119,7 @@ export class List extends Component {
                 fetchPage: 1,
               })
             }
-          }
+          },
         )
       }
     } catch (err) {
@@ -175,8 +172,8 @@ export class List extends Component {
       // else if it's season anime we can just filter from the data,
       this.props.history.push(`/list/genres/${currentGenre}/${value}/1`)
     } else {
-      const animesByType = this.state.data.filter(
-        anime => (value !== 'All' ? anime.format === value : true)
+      const animesByType = this.state.data.filter(anime =>
+        value !== 'All' ? anime.format === value : true,
       )
       this.setState({
         animes: animesByType,
@@ -192,7 +189,7 @@ export class List extends Component {
     if (this.state.currentGenre) {
       // We will fetch if user want to get genre anime
       this.props.history.push(
-        `/list/genres/${currentGenre}/${activeType}/${data.selected + 1}`
+        `/list/genres/${currentGenre}/${activeType}/${data.selected + 1}`,
       )
       this.loadAnimesByGenre()
     }
@@ -220,21 +217,18 @@ export class List extends Component {
     const renderAnimes = err
       ? 'Something is wrong please reload the page!'
       : loading
-        ? Array.from('dummyobjects').map((_, i) => (
-            <Loader key={i} viewWidth={viewWidth} />
+      ? Array.from('dummyobjects').map((_, i) => (
+          <Loader key={i} viewWidth={viewWidth} />
+        ))
+      : this.state.currentGenre
+      ? animes.map(anime => (
+          <Anime key={anime.id} {...anime} viewWidth={viewWidth} />
+        ))
+      : animes
+          .slice((currentPage - 1) * animesPerPage, currentPage * animesPerPage)
+          .map(anime => (
+            <Anime key={anime.id} {...anime} viewWidth={viewWidth} />
           ))
-        : this.state.currentGenre
-          ? animes.map(anime => (
-              <Anime key={anime.id} {...anime} viewWidth={viewWidth} />
-            ))
-          : animes
-              .slice(
-                (currentPage - 1) * animesPerPage,
-                currentPage * animesPerPage
-              )
-              .map(anime => (
-                <Anime key={anime.id} {...anime} viewWidth={viewWidth} />
-              ))
     return (
       <>
         <div className={styles.ListHeader}>

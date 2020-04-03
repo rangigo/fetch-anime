@@ -4,18 +4,21 @@ import { formatToTimeZone } from 'date-fns-timezone'
 
 import styles from './CountdownTime.module.scss'
 
-function CountdownTime({ ep, type, time }) {
+export interface CountdownTime {
+  ep: number
+  type: string
+  time: number
+}
+
+function CountdownTime({ ep, type, time }: CountdownTime) {
   const [countdownTime, setCountdownTime] = useState(time ? time * 1000 : null)
 
-  let interval
-
   useEffect(() => {
-    if (countdownTime >= 0 && countdownTime !== null) {
+    let interval: NodeJS.Timeout
+    if (countdownTime !== null && countdownTime >= 0) {
       interval = setInterval(() => {
         setCountdownTime(countdownTime - 1000)
       }, 1000)
-    } else {
-      clearInterval(interval)
     }
 
     return () => {

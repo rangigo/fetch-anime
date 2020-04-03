@@ -1,7 +1,7 @@
 import React from 'react'
 import Skeleton from 'react-skeleton-loader'
 
-import styles from '../Anime.module.scss'
+import styles from './Anime.module.scss'
 
 const CustomSkeleton = props => (
   <Skeleton widthRandomness="0" color="#70818f" {...props} />

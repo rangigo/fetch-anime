@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import logo from '../../assets/logo.png'
 import styles from './Navigation.module.scss'
-import NavigationItem from './NavigationItem'
+import NavigationItem from './NavigationItem/NavigationItem'
 
 const Navigation = () => {
   return (

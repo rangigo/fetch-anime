@@ -1,8 +1,8 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
-import Navigation from './components/Navigation'
-import List from './containers/List'
+import Navigation from './components/Navigation/Navigation'
+import List from './containers/List/List'
 import styles from './App.module.scss'
 
 import { library } from '@fortawesome/fontawesome-svg-core'

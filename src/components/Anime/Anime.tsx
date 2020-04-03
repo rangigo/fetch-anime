@@ -5,8 +5,8 @@ import SimpleBar from 'simplebar-react'
 
 import 'simplebar/dist/simplebar.min.css'
 import styles from './Anime.module.scss'
-import CountdownTime from '../../containers/CountdownTime'
-import LinkIcon from '../LinkIcon'
+import CountdownTime from '../../containers/CountdownTime/CountdownTime'
+import LinkIcon from '../LinkIcon/LinkIcon'
 
 const Anime = ({
   title: { english, romaji, native },
@@ -54,7 +54,7 @@ const Anime = ({
 
   const renderGenres =
     genres.length > 0
-      ? genres.map((genre, i) => {
+      ? genres.map((genre: string, i: number) => {
           if (i !== genres.length - 1)
             return (
               <li key={genre} className={styles.PluralGenres}>

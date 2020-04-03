@@ -917,7 +917,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.0", "@babel/runtime@^7.4.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.0", "@babel/runtime@^7.4.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.9.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.9.2.tgz#d90df0583a3a252f09aaa619665367bae518db06"
   integrity sha512-NE2DtOdufG7R5vnfQUTehdTfNycfUANEtCa9PssN9O/xmTzP4E08UI797ixaei6hBEVL9BI/PsdJS5x7mWoB9Q==
@@ -10365,6 +10365,13 @@ stealthy-require@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
+
+stop-runaway-react-effects@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/stop-runaway-react-effects/-/stop-runaway-react-effects-2.0.0.tgz#20853514af01c837ef6e22bfd220268f20713761"
+  integrity sha512-XFuYgkLwrtga4Py71q7uELwuxBw4fReD32nlYBv+mII12NXPYkLJvSonKjNYE2XHTqG22yWCBSl4w9pBNBZiBg==
+  dependencies:
+    "@babel/runtime" "^7.9.2"
 
 stream-browserify@^2.0.1:
   version "2.0.2"
