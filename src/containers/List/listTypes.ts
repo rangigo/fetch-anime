@@ -1,35 +1,37 @@
+import { AnimeFormat } from "../../components/Anime/types";
+
 export interface ListType {
-  value: string
+  value: AnimeFormat
   label: string
 }
 
 export const listTypes: ListType[] = [
   {
-    value: 'TV',
+    value: AnimeFormat.TV,
     label: 'Television',
   },
   {
-    value: 'MOVIE',
+    value: AnimeFormat.MOVIE,
     label: 'Movies',
   },
   {
-    value: 'TV_SHORT',
+    value: AnimeFormat.TV_SHORT,
     label: 'TV Short',
   },
   {
-    value: 'ONA',
+    value: AnimeFormat.ONA,
     label: 'ONA',
   },
   {
-    value: 'OVA',
+    value: AnimeFormat.OVA,
     label: 'OVA',
   },
   {
-    value: 'SPECIAL',
+    value: AnimeFormat.SPECIAL,
     label: 'Special',
   },
   {
-    value: 'All',
+    value: AnimeFormat.ALL,
     label: 'All',
   },
 ]

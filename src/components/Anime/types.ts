@@ -4,10 +4,6 @@ type FuzzyDate = {
   day: number
 }
 
-export interface AnimeProps extends Anime {
-  viewWidth: number
-}
-
 export interface AnimeTrailer {
   id: number
   site: string
@@ -47,6 +43,16 @@ export interface AiringScheduleConnection {
   nodes: AiringSchedule[]
 }
 
+export enum AnimeFormat {
+  TV = 'TV',
+  MOVIE = 'MOVIE',
+  TV_SHORT = 'TV_SHORT',
+  ONA = 'ONA',
+  OVA = 'OVA',
+  SPECIAL = 'SPECIAL',
+  ALL = ' All',
+}
+
 export interface Anime {
   startDate: FuzzyDate
   id: number
@@ -62,6 +68,10 @@ export interface Anime {
   nextAiringEpisode: AiringSchedule
   description: string
   coverImage: AnimeCoverImage
-  format: string
+  format: AnimeFormat
   airingSchedule: AiringScheduleConnection
+}
+
+export interface AnimeProps extends Anime {
+  viewWidth: number
 }
