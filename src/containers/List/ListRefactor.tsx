@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import produce from 'immer'
@@ -16,48 +16,61 @@ import useViewWidth from '../../hooks/useViewWidth'
 import { listTypes } from './listTypes'
 import { GET_ANIMES } from './query'
 import { AnimeData } from './types'
+import { AnimeFormat } from '../../components/Anime/types'
 
 function List() {
-  const [activeType, setActiveType] = useState('')
-  const { season, year, genre, type } = useParams()
+  const [activeType, setActiveType] = useState(AnimeFormat.TV)
+  const { season, year, genre } = useParams()
   const viewWidth = useViewWidth()
-  const { loading, error, data } = useQuery<AnimeData>(GET_ANIMES, {
+  const { loading, error, data, fetchMore } = useQuery<AnimeData>(GET_ANIMES, {
     variables: {
       season: season?.toUpperCase(),
       seasonYear: year,
+      ...(genre && { genre }),
     },
+    notifyOnNetworkStatusChange: true,
   })
 
-  const renderAnimes = error
-    ? 'Something is wrong please reload the page!'
-    : loading
-    ? Array(10)
-        .fill(0)
-        .map((_, i) => <Loader key={i} viewWidth={viewWidth} />)
-    : data?.Page.media.map(media => (
-        <Anime key={media.id} {...media} viewWidth={viewWidth} />
-      ))
+  const filteredAnimes = useMemo(() => {
+    return data?.Page.media.filter(media =>
+      activeType !== AnimeFormat.ALL ? media.format === activeType : true,
+    )
+  }, [data, activeType])
+
+  let renderAnimes
+  if (loading) {
+    renderAnimes = Array(10)
+      .fill(0)
+      .map((_, i) => <Loader key={i} viewWidth={viewWidth} />)
+  } else if (error) {
+    renderAnimes = `Error ${error.name}: ${error.message}`
+  } else if (filteredAnimes?.length === 0) {
+    renderAnimes = `No animes found.`
+  } else {
+    renderAnimes = filteredAnimes?.map(media => (
+      <Anime key={media.id} {...media} viewWidth={viewWidth} />
+    ))
+  }
 
   return (
     <>
       <div className={styles.ListHeader}>
         <ListTitle season={season} year={year} genre={genre} />
         <nav>
-          {listTypes.map(type => (
-            <ListType
-              activeType={activeType}
-              onClickType={() => setActiveType(type.value)}
-              value={type.value}
-              label={type.label}
-              key={type.value}
-            />
-          ))}
+          {!loading &&
+            listTypes.map(listType => (
+              <ListType
+                activeType={activeType}
+                onClickType={() => setActiveType(listType.value)}
+                value={listType.value}
+                label={listType.label}
+                key={listType.value}
+              />
+            ))}
         </nav>
       </div>
 
-      <div className={styles.ListContainer}>
-        {renderAnimes?.length === 0 ? 'No animes found.' : renderAnimes}
-      </div>
+      <div className={styles.ListContainer}>{renderAnimes}</div>
 
       {/*
       <div className={styles.ListFooter}>

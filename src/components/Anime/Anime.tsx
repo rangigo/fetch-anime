@@ -77,8 +77,8 @@ const Anime: React.FC<AnimeProps> = ({
           trailer.site === 'youtube'
             ? `https://www.youtube.com/watch?v=${trailer.id}`
             : trailer.site === 'dailymotion'
-              ? `https://www.dailymotion.com/video/${trailer.id}`
-              : '',
+            ? `https://www.dailymotion.com/video/${trailer.id}`
+            : '',
         site: trailer.site.replace(/^\w/, c => c.toUpperCase()),
       }
     : ''
@@ -98,10 +98,10 @@ const Anime: React.FC<AnimeProps> = ({
     genres.length >= 7
       ? '.565vw'
       : genres.length >= 6
-        ? '.64vw'
-        : genres.length >= 5
-          ? '.75vw'
-          : '14px'
+      ? '.64vw'
+      : genres.length >= 5
+      ? '.75vw'
+      : '14px'
 
   tagLineHeight = genres.length >= 6 ? '1.95' : '1.6'
 
@@ -130,10 +130,10 @@ const Anime: React.FC<AnimeProps> = ({
       genres.length >= 8
         ? '.7vw'
         : genres.length >= 7
-          ? '.8vw'
-          : genres.length >= 6
-            ? '.9vw'
-            : '1vw'
+        ? '.8vw'
+        : genres.length >= 6
+        ? '.9vw'
+        : '1vw'
 
     studioFontSize = studios.length >= 3 ? '.93vw' : '1.18vw'
     dateFontSize = '1.18vw'
@@ -148,10 +148,10 @@ const Anime: React.FC<AnimeProps> = ({
       genres.length >= 8
         ? '1.05vw'
         : genres.length >= 7
-          ? '1.12vw'
-          : genres.length >= 6
-            ? '1.12vw'
-            : '1.38vw'
+        ? '1.12vw'
+        : genres.length >= 6
+        ? '1.12vw'
+        : '1.38vw'
     studioFontSize = '1.38vw'
     dateFontSize = '1.38vw'
   }
@@ -207,19 +207,19 @@ const Anime: React.FC<AnimeProps> = ({
           <div className={styles.AnimeDate} style={{ fontSize: dateFontSize }}>
             {airingSchedule.nodes.length > 0
               ? formatToTimeZone(
-                airingSchedule.nodes[0].airingAt as number * 1000,
+                  (airingSchedule.nodes[0].airingAt as number) * 1000,
                   'D MMM, YYYY [at] HH:mm A z',
                   {
                     timeZone: 'Europe/Helsinki',
-                  }
+                  },
                 )
               : startDate
-                ? formatToTimeZone(
-                    new Date(startDate.year, startDate.month, startDate.day),
-                    'Do MMM, YYYY',
-                    { timeZone: 'Europe/Helsinki' }
-                  )
-                : '?'}
+              ? formatToTimeZone(
+                  new Date(startDate.year, startDate.month, startDate.day),
+                  'Do MMM, YYYY',
+                  { timeZone: 'Europe/Helsinki' },
+                )
+              : '?'}
           </div>
           <div className={styles.AnimeMetaData}>
             <div className={styles.AnimeSource}>
@@ -251,8 +251,8 @@ const Anime: React.FC<AnimeProps> = ({
           {externalLinks.length > 0 ? (
             [trailerLink as ExternalLink]
               .concat(externalLinks)
-              .map(
-                link => (link ? <LinkIcon key={link.url} {...link} /> : null)
+              .map(link =>
+                link ? <LinkIcon key={link.url} {...link} /> : null,
               )
           ) : (
             <p>?</p>
