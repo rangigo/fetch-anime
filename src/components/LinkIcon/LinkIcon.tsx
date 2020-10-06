@@ -12,9 +12,11 @@ import Amazon from '../../assets/Amazon.svg'
 
 import styles from './LinkIcon.module.scss'
 
-const LinkIcon = ({ url, site }) => {
-  let iconClassName = [styles.LinkIcon]
-  let icon = ''
+import { ExternalLink } from '../Anime/types'
+
+const LinkIcon: React.FC<ExternalLink> = ({ url, site }) => {
+  let iconClassName: string[] | string = [styles.LinkIcon]
+  let icon: JSX.Element | null = null
 
   switch (site) {
     case 'Crunchyroll':
@@ -93,7 +95,7 @@ const LinkIcon = ({ url, site }) => {
       break
     default:
       iconClassName = iconClassName.concat(styles.WebsiteIcon).join(' ')
-      icon = ''
+      icon = null
       break
   }
 

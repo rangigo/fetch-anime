@@ -4,13 +4,13 @@ import { formatToTimeZone } from 'date-fns-timezone'
 
 import styles from './CountdownTime.module.scss'
 
-export interface CountdownTime {
-  ep: number
+export interface CountdownTimeProps {
+  ep: number | null
   type: string
-  time: number
+  time: number | null | undefined
 }
 
-function CountdownTime({ ep, type, time }: CountdownTime) {
+function CountdownTime({ ep, type, time }: CountdownTimeProps) {
   const [countdownTime, setCountdownTime] = useState(time ? time * 1000 : null)
 
   useEffect(() => {

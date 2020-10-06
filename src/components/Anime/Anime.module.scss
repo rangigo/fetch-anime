@@ -19,6 +19,7 @@
   white-space: nowrap;
   width: 25%;
   font-size: 14px;
+
   @media screen and (max-width: 92em) {
     width: 33.333333333%;
   }
@@ -164,11 +165,15 @@
   justify-content: space-around;
 
   @media screen and (max-width: 1550px) {
-    font-size: .9em;
+    font-size: 0.9em;
   }
 
   .AnimeSource {
     text-transform: capitalize;
+  }
+
+  .AnimeEpisodes {
+    color: currentColor;
   }
 }
 

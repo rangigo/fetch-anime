@@ -7,8 +7,9 @@ import 'simplebar/dist/simplebar.min.css'
 import styles from './Anime.module.scss'
 import CountdownTime from '../../containers/CountdownTime/CountdownTime'
 import LinkIcon from '../LinkIcon/LinkIcon'
+import { AnimeProps, ExternalLink } from './types'
 
-const Anime = ({
+const Anime: React.FC<AnimeProps> = ({
   title: { english, romaji, native },
   genres,
   coverImage,
@@ -20,7 +21,7 @@ const Anime = ({
   idMal,
   viewWidth,
   nextAiringEpisode,
-  airingSchedule: { nodes },
+  airingSchedule,
   format: type,
   externalLinks,
   trailer,
@@ -189,8 +190,8 @@ const Anime = ({
         </ol>
         <div className={styles.PosterContainer}>
           <CountdownTime
-            time={nextAiringEpisode ? nextAiringEpisode.timeUntilAiring : null}
-            ep={nextAiringEpisode ? nextAiringEpisode.episode : null}
+            time={nextAiringEpisode?.timeUntilAiring}
+            ep={nextAiringEpisode?.episode}
             type={type}
           />
 
@@ -204,9 +205,9 @@ const Anime = ({
             {renderStudios}
           </ul>
           <div className={styles.AnimeDate} style={{ fontSize: dateFontSize }}>
-            {nodes.length > 0
+            {airingSchedule.nodes.length > 0
               ? formatToTimeZone(
-                  nodes[0].airingAt * 1000,
+                airingSchedule.nodes[0].airingAt as number * 1000,
                   'D MMM, YYYY [at] HH:mm A z',
                   {
                     timeZone: 'Europe/Helsinki',
@@ -248,7 +249,7 @@ const Anime = ({
         </div>
         <div className={styles.ExternalLinks}>
           {externalLinks.length > 0 ? (
-            [trailerLink]
+            [trailerLink as ExternalLink]
               .concat(externalLinks)
               .map(
                 link => (link ? <LinkIcon key={link.url} {...link} /> : null)

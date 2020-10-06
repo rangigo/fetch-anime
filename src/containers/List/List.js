@@ -3,7 +3,7 @@ import ReactPaginate from 'react-paginate'
 import axios from '../../hoc/axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { query, listTypes } from '../../helpers/globalVars'
+import { query, listTypes } from '../../utils'
 
 import Anime from '../../components/Anime/Anime'
 import Loader from '../../components/Anime/Loader'
@@ -58,7 +58,7 @@ export class List extends Component {
     // Get parameters from route
     const {
       params: { season, year, genre, page, type },
-    } = this.props?.match
+    } = this.props.match
 
     try {
       this.setState({

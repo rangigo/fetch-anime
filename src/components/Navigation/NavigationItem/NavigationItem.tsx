@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import styles from './NavigationItem.module.scss'
 
-const NavigationItem = ({ season }) => {
+const NavigationItem = ({ season } : { season: string | undefined}) => {
   return (
     <li className={styles.NavigationItem}>
       <div className={styles.DropBtn}>

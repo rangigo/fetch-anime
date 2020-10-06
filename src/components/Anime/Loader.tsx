@@ -3,21 +3,21 @@ import Skeleton from 'react-skeleton-loader'
 
 import styles from './Anime.module.scss'
 
-const CustomSkeleton = props => (
+const CustomSkeleton = (props: any) => (
   <Skeleton widthRandomness="0" color="#70818f" {...props} />
 )
 
-const Loader = ({ viewWidth }) => {
+const Loader = ({ viewWidth }: { viewWidth: number }) => {
   const width =
     viewWidth < 930
       ? '16vw'
       : viewWidth < 1200
-        ? '17vw'
-        : viewWidth <= 1550
-          ? '9vw'
-          : viewWidth < 1600
-            ? '11vw'
-            : '10vw'
+      ? '17vw'
+      : viewWidth <= 1550
+      ? '9vw'
+      : viewWidth < 1600
+      ? '11vw'
+      : '10vw'
 
   return (
     <article className={styles.AnimeContainer}>
@@ -25,7 +25,7 @@ const Loader = ({ viewWidth }) => {
         <h3 className={styles.MainTitle}>
           <CustomSkeleton width="300px" />
         </h3>
-        <ol className={styles.AnimeTags} style={{ border: 'none' }}>
+        <ol style={{ border: 'none' }}>
           <CustomSkeleton width="200px" height="65%" />
         </ol>
         <div

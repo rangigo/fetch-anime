@@ -1,7 +1,14 @@
 import gql from 'graphql-tag'
 
 export const GET_ANIMES = gql`
-  {
+  query(
+    $season: MediaSeason
+    $seasonYear: Int
+    $page: Int
+    $perPage: Int
+    $genre: String
+    $format: MediaFormat
+  ) {
     Page(page: $page, perPage: $perPage) {
       pageInfo {
         total
