@@ -6,7 +6,7 @@ import './index.scss'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 
-import { ApolloProvider } from 'react-apollo'
+import { ApolloProvider } from '@apollo/react-hooks'
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
