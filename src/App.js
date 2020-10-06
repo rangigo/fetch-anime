@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 import Navigation from './components/Navigation'
@@ -32,8 +32,8 @@ class App extends Component {
           </Switch>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default App
