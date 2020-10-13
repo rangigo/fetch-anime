@@ -42,10 +42,10 @@ git clone https://github.com/rangigo/fetch-anime.git
 
 cd fetch-anime
 
-npm install
+yarn
 ```
  * After the installation finshed, run the start command 
  ```
- npm start
+ yarn start
  ```
  * Now everything is ready! Open http://localhost:3000 to view it in the browser.
