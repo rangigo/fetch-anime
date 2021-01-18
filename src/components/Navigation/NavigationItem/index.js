@@ -14,6 +14,7 @@ const NavigationItem = ({ season }) => {
         className={styles.DropdownContent}
         style={season === 'fall' ? { left: -59 } : {}}
       >
+        <Link to={`/list/2021/${season}`}>{season} 2021-2022</Link>
         <Link to={`/list/2020/${season}`}>{season} 2020-2021</Link>
         <Link to={`/list/2019/${season}`}>{season} 2019-2020</Link>
         <Link to={`/list/2018/${season}`}>{season} 2018-2019</Link>
