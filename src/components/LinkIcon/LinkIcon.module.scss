@@ -19,20 +19,9 @@
 }
 
 .CrunchyrollIcon {
-  background: url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png');
-  background: -webkit-image-set(
-    url('https://s.livechart.me/assets/sprites-b682267b6179cf8af8e2596465dd255e7ccc8d97bb384eb3d1139d1d236cd16d.png')
-      1x,
-    url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png')
-      2x
-  );
-  background: image-set(
-    url('https://s.livechart.me/assets/sprites-b682267b6179cf8af8e2596465dd255e7ccc8d97bb384eb3d1139d1d236cd16d.png')
-      1x,
-    url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png')
-      2x
-  );
-  background-position: 0 -360px;
+  background: -webkit-image-set(url(https://s.livechart.me/assets/light-theme-sprites@1x-c04816891c4c81a696807a008766354b1d8dfbb9a2962baa3b58c70d7d2bb7db.png) 1x, url(https://s.livechart.me/assets/light-theme-sprites@2x-3c96a15f36c0ce9ed4bacad6d7a8a9914c81332e6030c0374adc066ba8c4d9b1.png) 2x) 0% 0% / 60px 450px no-repeat;
+  background-position: 0px -420px;
+
   &:hover {
     background-color: #f78c27;
     background-position: -30px -360px;
@@ -40,35 +29,16 @@
 }
 
 .WebsiteIcon {
-  background: url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png');
-  background: -webkit-image-set(
-    url('https://s.livechart.me/assets/sprites-b682267b6179cf8af8e2596465dd255e7ccc8d97bb384eb3d1139d1d236cd16d.png')
-      1x,
-    url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png')
-      2x
-  );
-  background: image-set(
-    url('https://s.livechart.me/assets/sprites-b682267b6179cf8af8e2596465dd255e7ccc8d97bb384eb3d1139d1d236cd16d.png')
-      1x,
-    url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png')
-      2x
-  );
-  background-position: 0 -210px;
-
+  background: -webkit-image-set(url(https://s.livechart.me/assets/light-theme-sprites@1x-c04816891c4c81a696807a008766354b1d8dfbb9a2962baa3b58c70d7d2bb7db.png) 1x, url(https://s.livechart.me/assets/light-theme-sprites@2x-3c96a15f36c0ce9ed4bacad6d7a8a9914c81332e6030c0374adc066ba8c4d9b1.png) 2x) 0% 0% / 60px 450px no-repeat;
+  background-position: 0px -270px;
   &:hover {
     background-color: #4a85ff;
     background-position: -30px -210px;
   }
 }
 .TwitterIcon {
-  background: url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png');
-  background: -webkit-image-set(
-    url('https://s.livechart.me/assets/sprites-b682267b6179cf8af8e2596465dd255e7ccc8d97bb384eb3d1139d1d236cd16d.png')
-      1x,
-    url('https://s.livechart.me/assets/sprites@2x-caf13c530c715eccc8304b86d348a1c2615ffaf074b76944ca93180d63b9a5af.png')
-      2x
-  );
-  background-position: 0 -150px;
+  background: -webkit-image-set(url(https://s.livechart.me/assets/light-theme-sprites@1x-c04816891c4c81a696807a008766354b1d8dfbb9a2962baa3b58c70d7d2bb7db.png) 1x, url(https://s.livechart.me/assets/light-theme-sprites@2x-3c96a15f36c0ce9ed4bacad6d7a8a9914c81332e6030c0374adc066ba8c4d9b1.png) 2x) 0% 0% / 60px 450px no-repeat;
+  background-position: 0px -210px;
   &:hover {
     background-color: #1da1f3;
     background-position: -30px -150px;
@@ -77,11 +47,11 @@
 
 .HidiveIcon {
   &:hover {
-    background-color: #00ADEF;
+    background-color: #00adef;
   }
 }
 
-.NormalIcon { 
+.NormalIcon {
   &:hover {
     background-color: white;
   }
@@ -89,7 +59,7 @@
 
 .HuluIcon {
   &:hover {
-    background-color: #79B732;
+    background-color: #79b732;
   }
 }
 
