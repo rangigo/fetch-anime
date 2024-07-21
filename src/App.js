@@ -22,12 +22,12 @@ class App extends Component {
         <div className={styles.Content}>
           <Switch>
             <Route exact path="/">
-              <Redirect to="/list/2023/fall" />
+              <Redirect to="/list/2024/summer" />
             </Route>
             <Route path="/list/genres/:genre/:type/:page" component={List} />
             <Route path="/list/:year/:season" component={List} />
             <Route path="*">
-              <Redirect to="/list/2023/fall" />
+              <Redirect to="/list/2024/summer" />
             </Route>
           </Switch>
         </div>
