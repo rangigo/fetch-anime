@@ -1,6 +1,6 @@
 # FetchAnime
 
-## Live Demo: https://fetch-anime.netlify.com
+## Live Demo: https://fetch-anime.netlify.app
 
 ## Inspiration
 Curate and tracking your favorite seasonal animes!
